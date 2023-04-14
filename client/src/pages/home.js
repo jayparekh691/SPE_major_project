@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useGetUserID } from '../hooks/useGetUserID'
 import axios from 'axios'
 import { Navigate } from 'react-router-dom'
+import Navbar from "../components/navbar";
 
 export default function Home() {
   const [events, setEvents] = useState([])
