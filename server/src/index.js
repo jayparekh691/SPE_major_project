@@ -1,8 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
-import { userRouter } from './routes/users.js'
-import { eventsRouter } from './routes/events.js'
+import { userRouter } from './controller/users.js'
+import { eventsRouter } from './controller/events.js'
 const app = express()
 
 app.use(express.json())
@@ -14,3 +14,5 @@ mongoose.connect(
 )
 
 app.listen(3001, () => console.log('Server Started'))
+
+export default app

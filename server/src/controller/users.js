@@ -10,6 +10,7 @@ router.post('/register', async (req, res) => {
     req.body
   const user = await UserModel.findOne({ username })
   if (user) {
+    res.sendStatus(409)
     return res.json({ message: 'Username already exist' })
   }
   const hashedPassword = await bcrypt.hash(password, 10)
@@ -29,14 +30,17 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   const { username, password } = req.body
   const user = await UserModel.findOne({ username })
-  if (!user) return res.json({ message: "User doesn't exist" })
-
+  if (!user) {
+    return res.json({ message: "User doesn't exist" }).status(409)
+  }
   const isPasswordValid = await bcrypt.compare(password, user.password)
-  if (!isPasswordValid)
-    return res.json({ message: 'Username or Password is incorrect' })
-
+  if (!isPasswordValid) {
+    return res
+      .json({ message: 'Username or Password is incorrect' })
+      .status(409)
+  }
   const token = jwt.sign({ id: user._id }, 'secret')
-  res.json({ token, userID: user._id })
+  res.json({ token, userID: user._id }).status(200)
 })
 
 export { router as userRouter }

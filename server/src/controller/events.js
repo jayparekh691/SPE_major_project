@@ -59,5 +59,4 @@ router.get('/participatedEvents/:userID', async (req, res) => {
     res.json(err)
   }
 })
-
 export { router as eventsRouter }
