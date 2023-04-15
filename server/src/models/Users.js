@@ -13,6 +13,7 @@ const UserSchema = new mongoose.Schema({
   hobbies: [
     { type: mongoose.Schema.Types.ObjectId, ref: 'hobbies', unique: true },
   ],
+
 })
 
 export const UserModel = mongoose.model('users', UserSchema)
