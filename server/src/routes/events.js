@@ -18,8 +18,11 @@ router.post('/', async (req, res) => {
   const event = new EventModel(req.body)
   try {
     const response = await event.save()
+
+    res.status(200)
     res.json(response)
   } catch (err) {
+    res.status(400)
     res.json(err)
   }
 })
@@ -32,8 +35,11 @@ router.put('/', async (req, res) => {
     event.participants.push(user)
     await event.save()
     await user.save()
-    res.json(participatedEvents)
+    res.status(200)
+    res.json(user.participatedEvents)
+    return res
   } catch (err) {
+    res.status(400)
     res.json(err)
   }
 })
@@ -44,6 +50,7 @@ router.get('/participatedEvents/ids/:userID', async (req, res) => {
     // console.log(req.params.userID)
     res.json({ participatedEvents: user?.participatedEvents })
   } catch (err) {
+    res.status(400)
     res.json(err)
   }
 })
@@ -56,7 +63,26 @@ router.get('/participatedEvents/:userID', async (req, res) => {
     })
     res.json({ participatedEvents: participatedEvents })
   } catch (err) {
+    console.log(err.message)
     res.json(err)
   }
 })
+
+router.put('/participatedEvents/remove', async (req, res) => {
+  try {
+    const event = await EventModel.findById(req.body.eventID)
+    const user = await UserModel.findById(req.body.userID)
+    user.participatedEvents.pop(event)
+    event.participants.pop(user)
+    await event.save()
+    await user.save()
+    res.status(200)
+    res.json(user.participatedEvents)
+    return res
+  } catch (err) {
+    res.status(400)
+    res.json(err)
+  }
+})
+
 export { router as eventsRouter }

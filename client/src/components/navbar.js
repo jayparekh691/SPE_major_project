@@ -8,18 +8,16 @@ export default function Navbar() {
   const logout = () => {
     setCookies('access_token', '')
     window.localStorage.removeItem('userID')
-    navigate('/auth')
+    navigate('/')
   }
   return (
     <div className="navbar">
-      <Link to="/">Home</Link>
-      <Link to="/createEvent">Create Event</Link>
-      <Link to="/participatedEvents">Participated Events</Link>
-      {!cookies.access_token ? (
-        <Link to="/auth">Login/Register</Link>
-      ) : (
+
+            <Link to="/home">Home</Link>
+        <Link to="/addHobbies">Add hobbies</Link>
+        <Link to="/createEvent">Create Event</Link>
+        <Link to="/participatedEvents">Participated Events</Link>
         <button onClick={logout}>Logout</button>
-      )}
     </div>
   )
 }

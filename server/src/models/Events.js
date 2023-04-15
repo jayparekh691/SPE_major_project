@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const EventSchema = new mongoose.Schema({
   eventname: { type: String, required: true, unique: true },
-  hobbyname: { type: String, required: true, unique: true },
+  hobbyname: { type: String, required: true },
   registrationDate: { type: String, required: true },
   location: { type: String, required: true },
   district: { type: String, required: true },
@@ -10,7 +10,9 @@ const EventSchema = new mongoose.Schema({
   description: { type: String, required: true },
   eventDate: { type: String, required: true },
   minParticipation: { type: Number, required: true },
-  participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'users' }],
+  participants: [
+    { type: mongoose.Schema.Types.ObjectId, ref: 'users', unique: true },
+  ],
   userOwner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'users',
