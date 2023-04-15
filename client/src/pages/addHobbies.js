@@ -35,6 +35,8 @@ export default function AddHobbies() {
     }, [])
 
     const selectHobby = async (hobbyID) => {
+        // console.log(hobbyID)
+        // console.log(userID)
         try {
             const response = await axios.put('http://localhost:3001/hobbies', {
                 hobbyID,
@@ -48,13 +50,30 @@ export default function AddHobbies() {
             console.log(err)
         }
     }
+
+    const removeHobby = async (hobbyID)=>{
+        try {
+            const url = "http://localhost:3001/hobbies/" + hobbyID + "/user/" + userID;
+            const response = await axios.put(url)
+            alert('Hobby removed')
+            // setSelectedHobbies(response.data.hobbies)
+            console.log(response.data.hobbies)
+            window.location.reload()
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     var key = "_id";
     const isAdded = (id)=> {
         let present = false;
-        selectedHobbies.forEach(element=>{
-            if(element[key]===id)
-                present = true;
-        })
+        if(selectedHobbies!=null){
+            selectedHobbies.forEach(element=>{
+                if(element[key]===id)
+                    present = true;
+            })
+        }
+
         return present;
     }
 
@@ -72,6 +91,12 @@ export default function AddHobbies() {
                                 disabled={isAdded(h._id)}
                             >
                                 Add
+                            </button>
+                            <button
+                                onClick={() => removeHobby(h._id)}
+                                disabled={!isAdded(h._id)}
+                            >
+                                Delete
                             </button>
                             <br />
                             <br />

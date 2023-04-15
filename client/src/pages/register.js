@@ -30,7 +30,7 @@ const Register = () => {
                 mobilenumber,
             })
             alert('Registration Completed! Login to continue')
-            navigate('/auth')
+            navigate('/')
         } catch (error) {
             console.error(error)
         }
