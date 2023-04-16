@@ -12,7 +12,9 @@ export default function Home() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/events')
+        const response = await axios.get(
+          'http://localhost:3001/events/' + userID
+        )
         setEvents(response.data)
       } catch (err) {
         console.log(err)
@@ -54,7 +56,7 @@ export default function Home() {
     <div>
       <h1>New Events</h1>
       <ul>
-        {events.map((e) => (
+        {events?.map((e) => (
           <li key={e._id}>
             <div>
               <h2>{e.eventname}</h2>

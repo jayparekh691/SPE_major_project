@@ -5,11 +5,14 @@ import { UserModel } from '../models/Users.js'
 
 const router = express.Router()
 
-router.get('/', async (req, res) => {
+router.get('/:userID', async (req, res) => {
   try {
-    const response = await EventModel.find({})
+    const id = await UserModel.findById(req.params.userID)
+    const dist = id.district
+    const response = await EventModel.find({ district: dist })
     res.json(response)
   } catch (err) {
+    console.log(err.message)
     res.json(err)
   }
 })
@@ -22,6 +25,7 @@ router.post('/', async (req, res) => {
     res.status(200)
     res.json(response)
   } catch (err) {
+    console.log(err.message)
     res.status(400)
     res.json(err)
   }

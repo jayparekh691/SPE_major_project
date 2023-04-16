@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
-import axios, { HttpStatusCode } from 'axios'
+import axios from 'axios'
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
+
+export const validateInput = (str = '') => str.includes('@')
 
 export default function Login() {
   const [_, setCookies] = useCookies(['access_token'])

@@ -42,7 +42,7 @@ export default function CreateEvent() {
       )
 
       alert('Event Created')
-      navigate('/')
+      navigate('/home')
     } catch (error) {
       console.error(error)
     }

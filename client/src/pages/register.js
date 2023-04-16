@@ -86,6 +86,7 @@ const Register = () => {
             required
             type="text"
             id="district"
+            onkeyup="this.value = this.value.toUpperCase();"
             value={district}
             onChange={(event) => setDistrict(event.target.value)}
           />
@@ -102,20 +103,33 @@ const Register = () => {
         </div>
         <div className="form-group">
           <label htmlFor="gender">Gender:</label>
-          <input
-            required
-            type="text"
-            id="gender"
-            value={gender}
-            onChange={(event) => setGender(event.target.value)}
-          />
+          <div>
+            <input
+              required
+              type="radio"
+              id="gender"
+              name="gender"
+              value="Male"
+              onChange={(event) => setGender(event.target.value)}
+            />
+            Male
+            <input
+              required
+              type="radio"
+              id="gender"
+              name="gender"
+              value="Female"
+              onChange={(event) => setGender(event.target.value)}
+            />
+            Female
+          </div>
         </div>
 
         <div className="form-group">
           <label htmlFor="mobilenumber">Mobile number:</label>
           <input
             required
-            type="text"
+            type="tel"
             id="mobilenumber"
             value={mobilenumber}
             onChange={(event) => setMobilenumber(event.target.value)}
