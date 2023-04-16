@@ -16,6 +16,7 @@ export default function Navbar() {
             <Link to="/home">Home</Link>
         <Link to="/addHobbies">Add hobbies</Link>
         <Link to="/createEvent">Create Event</Link>
+        <Link to="/yourEvents">Your Events</Link>
         <Link to="/participatedEvents">Participated Events</Link>
         <button onClick={logout}>Logout</button>
     </div>

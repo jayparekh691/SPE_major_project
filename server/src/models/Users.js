@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
   mobilenumber: { type: String, required: true },
   participatedEvents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'events' }],
   hobbies: [
-    { type: mongoose.Schema.Types.ObjectId, ref: 'hobbies', unique: true },
+    { type: mongoose.Schema.Types.ObjectId, ref: 'hobbies'},
   ],
 })
 
