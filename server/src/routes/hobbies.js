@@ -2,7 +2,7 @@ import express from 'express'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { HobbyModel } from '../models/Hobbies.js'
-import { UserModel } from '../models/Users.js'
+import {UserModel} from "../models/Users.js"
 
 const router = express.Router()
 
@@ -47,6 +47,29 @@ router.get('/interestedHobbies/:userID', async (req, res) => {
       _id: { $in: user.hobbies },
     })
     res.json({ hobbies: hobbies })
+  } catch (err) {
+    res.json(err)
+  }
+})
+
+router.put('/:hobbyID/user/:userID', async (req, res) => {
+  try {
+    const hobby = await HobbyModel.findById(req.params.hobbyID)
+    const user = await UserModel.findById(req.params.userID)
+    // console.log("hobby.hobbyName")
+    const userIndex = hobby.userList.indexOf(req.params.userID);
+    const hobbyIndex = user.hobbies.indexOf(req.params.hobbyID);
+
+
+    if (userIndex > -1) {
+      hobby.userList.splice(userIndex, 1);
+    }
+    if(hobbyIndex>-1){
+      user.hobbies.splice(hobbyIndex,1);
+    }
+    await hobby.save()
+    await user.save()
+    res.json(hobbies)
   } catch (err) {
     res.json(err)
   }

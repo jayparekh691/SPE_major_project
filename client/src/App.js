@@ -7,6 +7,7 @@ import CreateEvent from './pages/createEvent'
 import Navbar from './components/navbar'
 import {useCookies} from "react-cookie";
 import AddHobbies from "./pages/addHobbies";
+import YourEvents from "./pages/yourEvents";
 
 function App() {
   const [cookies, setCookies] = useCookies(['access_token'])
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<Auth />}></Route>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/addHobbies" element={<AddHobbies />}></Route>
+          <Route path="/yourEvents" element={<YourEvents />}></Route>
           <Route
             path="/participatedEvents"
             element={<ParticipatedEvents />}
