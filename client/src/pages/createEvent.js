@@ -41,7 +41,7 @@ export default function CreateEvent() {
   const handleChange = (event) => {
     const { name, value } = event.target
     setNewEvent({ ...newevent, [name]: value })
-    // console.log(name, value)
+    console.log(name, value)
   }
 
   const handleSubmit = async (event) => {

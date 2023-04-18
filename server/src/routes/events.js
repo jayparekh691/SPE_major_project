@@ -12,10 +12,19 @@ router.get('/:userID', async (req, res) => {
     const dist = id.district
     const hobbies = id.hobbies
     const response = await EventModel.find({ district: dist })
-    // response = await EventModel.find({
-    //   _id: {$id:user.hobbies},
-    // })
-    res.json(response)
+    let result = []
+    for (let index = 0; index < response.length; index++) {
+      for (let index1 = 0; index1 < hobbies.length; index1++) {
+        let hobby = await HobbyModel.findById(hobbies[index1])
+        console.log(hobby.hobbyName)
+        console.log(response[index].hobbyname)
+        if (response[index].hobbyname === hobby.hobbyName) {
+          result.push(response[index])
+          break
+        }
+      }
+    }
+    res.json(result)
   } catch (err) {
     console.log(err.message)
     res.json(err)
