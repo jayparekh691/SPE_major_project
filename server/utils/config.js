@@ -33,4 +33,4 @@ env = process.env
 const PORT = env.PORT
 const MONGODB_URI = env.MONGODB_URI
 
-export default { PORT, MONGODB_URI, SECRET }
+export default { PORT, MONGODB_URI }
