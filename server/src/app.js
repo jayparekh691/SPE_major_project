@@ -24,4 +24,13 @@ if (process.env.NODE_ENV === 'testing') {
   )
 }
 
+// mongoose
+//   .connect(config.MONGODB_URI)
+//   .then(() => {
+//     logger.info('Successfully connected to MongoDB')
+//   })
+//   .catch((error) => {
+//     logger.error(`Failed to connect to MongoDB: ${error.message}`)
+//   })
+
 export default app
