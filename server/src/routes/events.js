@@ -80,15 +80,16 @@ router.delete('/:id', async (req, res) => {
   deleteEventsFromUser()
 
   EventModel.findByIdAndDelete(req.params.id)
-      .then((event) => {
-        if (!event) {
-          return res.status(404).send()
-        }
-        res.send(event)
-      })
-      .catch((error) => {
-        res.status(500).send(error)
-      })
+
+    .then((event) => {
+      if (!event) {
+        return res.status(404).send()
+      }
+      res.send(event)
+    })
+    .catch((error) => {
+      res.status(500).send(error)
+    })
 })
 
 router.get('/participatedEvents/ids/:userID', async (req, res) => {
@@ -114,6 +115,7 @@ router.get('/participatedEvents/:userID', async (req, res) => {
     res.json(err)
   }
 })
+
 
 router.put(
     '/participatedEvents/remove/:userID/:eventID',

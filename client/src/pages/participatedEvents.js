@@ -22,12 +22,11 @@ export default function ParticipatedEvents() {
 
   const remove = async (eventID) => {
     try {
-      const response = await axios.put(
-        'http://localhost:3001/events/participatedEvents/remove',
-        {
-          eventID,
-          userID,
-        }
+      const response = await axios.delete(
+        'http://localhost:3001/events/participatedEvents/remove/' +
+          userID +
+          '/' +
+          eventID
       )
       alert('Removed')
       setParticipatedEvents(response.data.participatedEvents)

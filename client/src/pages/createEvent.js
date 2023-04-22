@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useGetUserID } from '../hooks/useGetUserID'
 import { useNavigate } from 'react-router-dom'
@@ -7,7 +7,7 @@ import { useCookies } from 'react-cookie'
 export default function CreateEvent() {
   const userID = useGetUserID()
   const [cookies, _] = useCookies(['access_token'])
-
+  const [hobbies, setHobbies] = useState([])
   const [newevent, setNewEvent] = useState({
     eventname: '',
     hobbyname: '',
@@ -22,11 +22,26 @@ export default function CreateEvent() {
   })
 
   const navigate = useNavigate()
+  useEffect(() => {
+    const GetHobbies = async () => {
+      console.log('JAY')
+      try {
+        const response = await axios.get(
+          'http://localhost:3001/events/createdEvents/hobbies/' + userID
+        )
+        setHobbies(response.data.hobbies)
+        console.log(hobbies.length)
+      } catch (err) {
+        console.error(err.message)
+      }
+    }
+    GetHobbies()
+  }, [1])
 
   const handleChange = (event) => {
     const { name, value } = event.target
     setNewEvent({ ...newevent, [name]: value })
-    // console.log(name, value)
+    console.log(name, value)
   }
 
   const handleSubmit = async (event) => {
@@ -65,14 +80,27 @@ export default function CreateEvent() {
         <br />
 
         <label htmlFor="hobbyname">Hobby Name:</label>
-        <input
+        {/* <input
           type="text"
           id="hobbyname"
           name="hobbyname"
           value={newevent.hobbyname}
           onChange={handleChange}
           required
-        />
+        /> */}
+        <select
+          type="text"
+          id="hobbyname"
+          name="hobbyname"
+          value={newevent.hobbyname}
+          onChange={handleChange}
+          required
+        >
+          <option>Select Hobby</option>
+          {hobbies?.map((hobby) => {
+            return <option>{hobby}</option>
+          })}
+        </select>
         <br />
         <br />
 
