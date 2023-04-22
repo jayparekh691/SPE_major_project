@@ -3,10 +3,13 @@ import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { BACKEND_URL } from '../config'
+import { FRONTEND_URL } from '../config'
 
 const backend = BACKEND_URL
 
 const Register = () => {
+  console.log(backend)
+  console.log(FRONTEND_URL)
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -35,7 +38,7 @@ const Register = () => {
       alert('Registration Completed! Login to continue')
       window.location.reload()
     } catch (error) {
-      console.error(error)
+      alert(error.message)
     }
   }
 

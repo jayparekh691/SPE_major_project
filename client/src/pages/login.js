@@ -11,6 +11,7 @@ const backend = BACKEND_URL
 export const validateInput = (str = '') => str.includes('@')
 
 export default function Login() {
+  console.log(backend)
   const [_, setCookies] = useCookies(['access_token'])
 
   const [username, setUsername] = useState('')
@@ -30,7 +31,7 @@ export default function Login() {
       window.localStorage.setItem('userID', result.data.userID)
       navigate('/home')
     } catch (error) {
-      alert(error.response.data.message)
+      alert(error.message)
       console.error(error)
     }
   }

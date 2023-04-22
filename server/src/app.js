@@ -28,7 +28,8 @@ console.log(process.env.NODE_ENV)
 mongoose
   .connect(config.MONGODB_URI)
   .then(() => {
-    console.log('Successfully connected to MongoDB')
+    console.log(config.MONGODB_URI)
+    console.log(config.PORT)
   })
   .catch((error) => {
     console.log(error.message)
