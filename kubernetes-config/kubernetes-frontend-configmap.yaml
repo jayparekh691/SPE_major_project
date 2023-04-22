@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: socialconnect-frontend-configmap
+  namespace: socialconnect
 data:
   REACT_APP_FRONTEND_URL: socialconnect-frontend-service
   REACT_APP_BACKEND_URL: socialconnect-backend-service
