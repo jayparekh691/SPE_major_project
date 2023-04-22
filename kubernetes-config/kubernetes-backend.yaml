@@ -1,41 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: socialconnect-backend-deployment
-    namespace: socialconnect
+  name: socialconnect-backend-deployment
+  namespace: socialconnect
 spec:
-    selector:
-        matchLabels:
-            app: socialconnect-backend
-    replicas: 1
-    template:
-        metadata:
-            labels:
-                app: socialconnect-backend
-        spec:
-            containers:
-                - name: socialconnect-backend
-                  image: jayparekhiiitb/spe_major_project-server
-                  resources:
-                      limits:
-                          memory: "128Mi"
-                          cpu: "500m"
-                  ports:
-                      - name: http
-                        containerPort: 3001
-                  # envFrom:
-                  #   - secretRef:
-                  #       name: socialconnect-backend-secret
+  selector:
+    matchLabels:
+      app: socialconnect-backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: socialconnect-backend
+    spec:
+      containers:
+        - name: socialconnect-backend
+          image: jayparekhiiitb/spe_major_project-server
+          resources:
+            limits:
+              memory: '128Mi'
+              cpu: '500m'
+          ports:
+            - name: http
+              containerPort: 3001
+          envFrom:
+            - secretRef:
+                name: socialconnect-backend-secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
-    name: socialconnect-backend-service
-    namespace: socialconnect
+  name: socialconnect-backend-service
+  namespace: socialconnect
 spec:
-    selector:
-        app: socialconnect-backend
-    ports:
-        - name: http
-          port: 3001
-          targetPort: 3001
+  selector:
+    app: socialconnect-backend
+  ports:
+    - name: http
+      port: 3001
+      targetPort: 3001
