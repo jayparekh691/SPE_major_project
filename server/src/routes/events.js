@@ -80,6 +80,7 @@ router.delete('/:id', async (req, res) => {
   deleteEventsFromUser()
 
   EventModel.findByIdAndDelete(req.params.id)
+
     .then((event) => {
       if (!event) {
         return res.status(404).send()
@@ -115,35 +116,36 @@ router.get('/participatedEvents/:userID', async (req, res) => {
   }
 })
 
-router.delete(
-  '/participatedEvents/remove/:userID/:eventID',
-  async (req, res) => {
-    try {
-      const event = await EventModel.findById(req.params.eventID)
-      const user = await UserModel.findById(req.params.userID)
-      // user.participatedEvents.pop(event)
-      // event.participants.pop(user)
-      const eventIndex = user.participatedEvents.indexOf(event._id)
-      const userIndex = event.participants.indexOf(user._id)
-      if (eventIndex > -1) {
-        console.log('user')
-        user.participatedEvents.splice(eventIndex, 1)
+
+router.put(
+    '/participatedEvents/remove/:userID/:eventID',
+    async (req, res) => {
+      try {
+        const event = await EventModel.findById(req.params.eventID)
+        const user = await UserModel.findById(req.params.userID)
+        // user.participatedEvents.pop(event)
+        // event.participants.pop(user)
+        const eventIndex = user.participatedEvents.indexOf(event._id)
+        const userIndex = event.participants.indexOf(user._id)
+        if (eventIndex > -1) {
+          console.log('user')
+          user.participatedEvents.splice(eventIndex, 1)
+        }
+        if (userIndex > -1) {
+          console.log('event')
+          event.participants.splice(userIndex, 1)
+        }
+        await event.save()
+        await user.save()
+        res.status(200)
+        res.json(user.participatedEvents)
+        return res
+      } catch (err) {
+        console.log(err.message)
+        res.status(400)
+        res.json(err)
       }
-      if (userIndex > -1) {
-        console.log('event')
-        event.participants.splice(userIndex, 1)
-      }
-      await event.save()
-      await user.save()
-      res.status(200)
-      res.json(user.participatedEvents)
-      return res
-    } catch (err) {
-      console.log(err.message)
-      res.status(400)
-      res.json(err)
     }
-  }
 )
 
 router.get('/createdEvents/:userID', async (req, res) => {
