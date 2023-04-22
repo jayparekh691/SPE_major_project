@@ -19,8 +19,10 @@ router.post('/', async (req, res) => {
   const event = new HobbyModel(req.body)
   try {
     const response = await event.save()
+    res.status(200)
     res.json(response)
   } catch (err) {
+    res.status(400)
     res.json(err)
   }
 })
@@ -40,6 +42,7 @@ router.put('/', async (req, res) => {
   }
 })
 
+// LIST OF ALL THE HOBBIES OF A USER
 router.get('/interestedHobbies/:userID', async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.userID)
@@ -52,6 +55,7 @@ router.get('/interestedHobbies/:userID', async (req, res) => {
   }
 })
 
+// REMOVE HOBBY OF A USER
 router.put('/:hobbyID/user/:userID', async (req, res) => {
   try {
     const hobby = await HobbyModel.findById(req.params.hobbyID)

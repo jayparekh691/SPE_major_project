@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: socialconnect-ingress
+    labels:
+        name: socialconnect-ingress
+spec:
+    rules:
+        - host: socialconnect.com
+          http:
+              paths:
+                  - pathType: Prefix
+                    path: "/"
+                    backend:
+                        service:
+                            name: socialconnect-frontend-service
+                            port:
+                                number: 3000
+                  - pathType: Prefix
+                    path: "/api"
+                    backend:
+                        service:
+                            name: socialconnect-backend-service
+                            port:
+                                number: 3001

@@ -12,7 +12,6 @@ const UserSchema = new mongoose.Schema({
   participatedEvents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'events' }],
   hobbies: [
     { type: mongoose.Schema.Types.ObjectId, ref: 'hobbies', default: null },
-
   ],
 })
 
