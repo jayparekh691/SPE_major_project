@@ -3,6 +3,9 @@ import { useGetUserID } from '../hooks/useGetUserID'
 import axios from 'axios'
 import { Navigate } from 'react-router-dom'
 import Navbar from '../components/navbar'
+import { BACKEND_URL } from '../config'
+
+const backend = BACKEND_URL
 
 export default function Home() {
   const [events, setEvents] = useState([])
@@ -12,10 +15,9 @@ export default function Home() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(
-          'http://localhost:3001/events/' + userID
-        )
+        const response = await axios.get(backend + '/events/' + userID)
         setEvents(response.data)
+        console.log(response.data)
       } catch (err) {
         console.log(err)
       }
@@ -24,7 +26,7 @@ export default function Home() {
     const fetchParticipatedEvents = async () => {
       try {
         const response = await axios.get(
-          'http://localhost:3001/events/participatedEvents/ids/' + userID
+          backend + '/events/participatedEvents/ids/' + userID
         )
         console.log(response.data.participatedEvents)
         setParticipatedEvents(response.data.participatedEvents)
@@ -38,7 +40,7 @@ export default function Home() {
 
   const participate = async (eventID) => {
     try {
-      const response = await axios.put('http://localhost:3001/events', {
+      const response = await axios.put(backend + '/events', {
         eventID,
         userID,
       })

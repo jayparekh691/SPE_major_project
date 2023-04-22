@@ -3,6 +3,9 @@ import axios from 'axios'
 import { useGetUserID } from '../hooks/useGetUserID'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
+import { BACKEND_URL } from '../config'
+
+const backend = BACKEND_URL
 
 export default function CreateEvent() {
   const userID = useGetUserID()
@@ -27,7 +30,7 @@ export default function CreateEvent() {
       console.log('JAY')
       try {
         const response = await axios.get(
-          'http://localhost:3001/events/createdEvents/hobbies/' + userID
+          backend + '/events/createdEvents/hobbies/' + userID
         )
         setHobbies(response.data.hobbies)
         console.log(hobbies.length)
@@ -49,7 +52,7 @@ export default function CreateEvent() {
 
     try {
       await axios.post(
-        'http://localhost:3001/events',
+        backend + '/events',
         { ...newevent },
         {
           headers: { authorization: cookies.access_token },

@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useGetUserID } from '../hooks/useGetUserID'
 import axios from 'axios'
+import { BACKEND_URL } from '../config'
+
+const backend = BACKEND_URL
 
 export default function ParticipatedEvents() {
   const [participatedEvents, setParticipatedEvents] = useState([])
@@ -10,7 +13,7 @@ export default function ParticipatedEvents() {
     const fetchParticipatedEvents = async () => {
       try {
         const response = await axios.get(
-          'http://localhost:3001/events/participatedEvents/' + userID
+          backend + '/events/participatedEvents/' + userID
         )
         setParticipatedEvents(response.data.participatedEvents)
       } catch (err) {
@@ -22,11 +25,8 @@ export default function ParticipatedEvents() {
 
   const remove = async (eventID) => {
     try {
-      const response = await axios.delete(
-        'http://localhost:3001/events/participatedEvents/remove/' +
-          userID +
-          '/' +
-          eventID
+      const response = await axios.put(
+        backend + '/events/participatedEvents/remove/' + userID + '/' + eventID
       )
       alert('Removed')
       setParticipatedEvents(response.data.participatedEvents)

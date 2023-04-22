@@ -16,8 +16,6 @@ router.get('/:userID', async (req, res) => {
     for (let index = 0; index < response.length; index++) {
       for (let index1 = 0; index1 < hobbies.length; index1++) {
         let hobby = await HobbyModel.findById(hobbies[index1])
-        console.log(hobby.hobbyName)
-        console.log(response[index].hobbyname)
         if (response[index].hobbyname === hobby.hobbyName) {
           result.push(response[index])
           break
@@ -80,7 +78,6 @@ router.delete('/:id', async (req, res) => {
   deleteEventsFromUser()
 
   EventModel.findByIdAndDelete(req.params.id)
-
     .then((event) => {
       if (!event) {
         return res.status(404).send()
@@ -116,37 +113,33 @@ router.get('/participatedEvents/:userID', async (req, res) => {
   }
 })
 
-
-router.put(
-    '/participatedEvents/remove/:userID/:eventID',
-    async (req, res) => {
-      try {
-        const event = await EventModel.findById(req.params.eventID)
-        const user = await UserModel.findById(req.params.userID)
-        // user.participatedEvents.pop(event)
-        // event.participants.pop(user)
-        const eventIndex = user.participatedEvents.indexOf(event._id)
-        const userIndex = event.participants.indexOf(user._id)
-        if (eventIndex > -1) {
-          console.log('user')
-          user.participatedEvents.splice(eventIndex, 1)
-        }
-        if (userIndex > -1) {
-          console.log('event')
-          event.participants.splice(userIndex, 1)
-        }
-        await event.save()
-        await user.save()
-        res.status(200)
-        res.json(user.participatedEvents)
-        return res
-      } catch (err) {
-        console.log(err.message)
-        res.status(400)
-        res.json(err)
-      }
+router.put('/participatedEvents/remove/:userID/:eventID', async (req, res) => {
+  try {
+    const event = await EventModel.findById(req.params.eventID)
+    const user = await UserModel.findById(req.params.userID)
+    // user.participatedEvents.pop(event)
+    // event.participants.pop(user)
+    const eventIndex = user.participatedEvents.indexOf(event._id)
+    const userIndex = event.participants.indexOf(user._id)
+    if (eventIndex > -1) {
+      console.log('user')
+      user.participatedEvents.splice(eventIndex, 1)
     }
-)
+    if (userIndex > -1) {
+      console.log('event')
+      event.participants.splice(userIndex, 1)
+    }
+    await event.save()
+    await user.save()
+    res.status(200)
+    res.json(user.participatedEvents)
+    return res
+  } catch (err) {
+    console.log(err.message)
+    res.status(400)
+    res.json(err)
+  }
+})
 
 router.get('/createdEvents/:userID', async (req, res) => {
   try {
@@ -154,7 +147,7 @@ router.get('/createdEvents/:userID', async (req, res) => {
     res.json(events)
   } catch (err) {
     res.status(400)
-    res.json(err)
+    res.json(err.message)
   }
 })
 

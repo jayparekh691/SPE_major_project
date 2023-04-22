@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { BACKEND_URL } from '../config'
+
+const backend = BACKEND_URL
 
 const Register = () => {
   const [name, setName] = useState('')
@@ -19,7 +22,7 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      await axios.post('http://localhost:3001/auth/register', {
+      await axios.post(backend + '/auth/register', {
         name,
         username,
         password,

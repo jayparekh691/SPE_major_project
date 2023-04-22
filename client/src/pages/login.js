@@ -4,6 +4,9 @@ import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { BACKEND_URL } from '../config'
+
+const backend = BACKEND_URL
 
 export const validateInput = (str = '') => str.includes('@')
 
@@ -19,7 +22,7 @@ export default function Login() {
     event.preventDefault()
 
     try {
-      const result = await axios.post('http://localhost:3001/auth/login', {
+      const result = await axios.post(backend + '/auth/login', {
         username,
         password,
       })
