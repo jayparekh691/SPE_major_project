@@ -5,7 +5,7 @@
     - name: copying file with playbook
       become: true
       copy:
-        src: ./kubernetes-config/kubernetes-backend.yaml
+        src: ./kubernetes-config/kubernetes*.yaml
         dest: ./
         owner: jay
         group: jay
