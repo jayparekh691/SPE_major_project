@@ -2,10 +2,10 @@
 - name: Ansible Copy Example Local to Remote
   hosts: demoArc
   tasks:
-    - name: copying file with playbook
+    - name: copying Backend file with playbook
       become: true
       copy:
-        src: ./kubernetes-config/kubernetes*.yaml
+        src: ./kubernetes-config
         dest: ./
         owner: jay
         group: jay
