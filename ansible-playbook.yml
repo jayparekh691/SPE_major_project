@@ -1,6 +1,6 @@
 ---
 - name: Deploy Docker Images
-  hosts: all
+  hosts: localhost
   tasks:
     - name: Copy Kubernetes Compose files from host machine to remote host
       copy:
