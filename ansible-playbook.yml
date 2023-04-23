@@ -5,8 +5,8 @@
     - name: copying file with playbook
       become: true
       copy:
-        src: /home/jay/Desktop/Social Platform For Hobbyist/kubernetes-config/kubernetes-backend.yaml
-        dest: /home/jay/Desktop
+        src: ./kubernetes-config/kubernetes-backend.yaml
+        dest: ./
         owner: jay
         group: jay
         mode: 0644

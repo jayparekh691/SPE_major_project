@@ -1,3 +1,2 @@
-[defaults]
-host_key_checking = False
-192.168.232.104 ansible_user=jay
+[demoArc]
+client1 ansible_host=172.16.138.223 ansible_connection=ssh ansible_user=jay
