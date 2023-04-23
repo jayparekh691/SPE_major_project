@@ -22,7 +22,7 @@
       command: kubectl apply -f kubernetes-config/kubernetes-frontend.yaml
     - name: Apply backend
       command: kubectl apply -f kubernetes-config/kubernetes-backend.yaml
-    - name: Ingress addons
-      command: minikube addons enable ingress
     - name: Apply ingress
       command: kubectl apply -f kubernetes-config/kubernetes-ingress.yaml
+    - name: Ingress addons
+      command: minikube addons enable ingress
