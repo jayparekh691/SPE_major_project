@@ -10,3 +10,7 @@
         owner: jay
         group: jay
         mode: 0644
+    - name: Start Minikube
+      command: minikube start
+    - name: Create namespace
+      command: kubectl create namespace socialconnect
