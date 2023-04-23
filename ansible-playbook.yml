@@ -10,6 +10,8 @@
         owner: jay
         group: jay
         mode: 0644
+    - name: Change directory
+      command: cd kubernetes-config
     - name: Start Minikube
       command: minikube start
     - name: Create namespace
