@@ -1,8 +1,12 @@
 ---
-- name: Deploy Docker Images
-  hosts: host
+- name: Ansible Copy Example Local to Remote
+  hosts: demoArc
   tasks:
-    - name: Copy Kubernetes Compose files from host machine to remote host
+    - name: copying file with playbook
+      become: true
       copy:
         src: ./kubernetes-config/kubernetes-backend.yaml
-        dest: ./
+        dest: /home/jay/Desktop
+        owner: jay
+        group: jay
+        mode: 0644
