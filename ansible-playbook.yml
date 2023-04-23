@@ -10,19 +10,19 @@
         owner: jay
         group: jay
         mode: 0644
-    - name: Change directory
-      command: cd kubernetes-config
+    # - name: Change directory
+    #   command: cd kubernetes-config
     - name: Start Minikube
       command: minikube start
     - name: Create namespace
       command: kubectl create namespace socialconnect
     - name: Apply secret file
-      command: kubectl apply -f kubernetes-secret.yaml
+      command: kubectl apply -f kubernetes-config/kubernetes-secret.yaml
     - name: Apply frontend
-      command: kubectl apply -f kubernetes-frontend.yaml
+      command: kubectl apply -f kubernetes-config/kubernetes-frontend.yaml
     - name: Apply backend
-      command: kubectl apply -f kubernetes-backend.yaml
+      command: kubectl apply -f kubernetes-config/kubernetes-backend.yaml
     - name: Ingress addons
       command: minikube addons enable ingress
     - name: Apply ingress
-      command: kubectl apply -f kubernetes-ingress.yaml
+      command: kubectl apply -f kubernetes-config/kubernetes-ingress.yaml
