@@ -5,7 +5,7 @@ FROM alpine:3.14
 WORKDIR /app
 
 # Copy the configuration files
-COPY ./kubernetes*.yaml /app/kubernetes
+COPY ./kubernetes*.yaml /app/kubernetes/
 
 # Install kubectl
 RUN apk add --no-cache curl \
