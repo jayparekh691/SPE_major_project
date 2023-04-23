@@ -6,7 +6,7 @@ import { UserModel } from '../models/Users.js'
 
 const router = express.Router()
 
-router.get('/api/', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const response = await HobbyModel.find({})
     res.json(response)
@@ -15,7 +15,7 @@ router.get('/api/', async (req, res) => {
   }
 })
 
-router.post('/api/', async (req, res) => {
+router.post('/', async (req, res) => {
   const event = new HobbyModel(req.body)
   try {
     const response = await event.save()
@@ -27,7 +27,7 @@ router.post('/api/', async (req, res) => {
   }
 })
 
-router.put('/api/', async (req, res) => {
+router.put('/', async (req, res) => {
   try {
     const hobby = await HobbyModel.findById(req.body.hobbyID)
     const user = await UserModel.findById(req.body.userID)
@@ -43,7 +43,7 @@ router.put('/api/', async (req, res) => {
 })
 
 // LIST OF ALL THE HOBBIES OF A USER
-router.get('/api/interestedHobbies/:userID', async (req, res) => {
+router.get('/interestedHobbies/:userID', async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.userID)
     const hobbies = await HobbyModel.find({
@@ -56,7 +56,7 @@ router.get('/api/interestedHobbies/:userID', async (req, res) => {
 })
 
 // REMOVE HOBBY OF A USER
-router.put('/api/:hobbyID/user/:userID', async (req, res) => {
+router.put('/:hobbyID/user/:userID', async (req, res) => {
   try {
     const hobby = await HobbyModel.findById(req.params.hobbyID)
     const user = await UserModel.findById(req.params.userID)

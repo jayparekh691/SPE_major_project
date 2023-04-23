@@ -6,7 +6,7 @@ import { HobbyModel } from '../models/Hobbies.js'
 
 const router = express.Router()
 
-router.get('/api/:userID', async (req, res) => {
+router.get('/:userID', async (req, res) => {
   try {
     const id = await UserModel.findById(req.params.userID)
     const dist = id.district
@@ -29,7 +29,7 @@ router.get('/api/:userID', async (req, res) => {
   }
 })
 
-router.post('/api/', async (req, res) => {
+router.post('/', async (req, res) => {
   const event = new EventModel(req.body)
   try {
     const response = await event.save()
@@ -43,7 +43,7 @@ router.post('/api/', async (req, res) => {
   }
 })
 
-router.put('/api/', async (req, res) => {
+router.put('/', async (req, res) => {
   try {
     const event = await EventModel.findById(req.body.eventID)
     const user = await UserModel.findById(req.body.userID)
@@ -60,7 +60,7 @@ router.put('/api/', async (req, res) => {
   }
 })
 
-router.delete('/api/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   const event = await EventModel.findById(req.params.id)
 
   const deleteEventsFromUser = async () => {
@@ -89,7 +89,7 @@ router.delete('/api/:id', async (req, res) => {
     })
 })
 
-router.get('/api/participatedEvents/ids/:userID', async (req, res) => {
+router.get('/participatedEvents/ids/:userID', async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.userID)
     // console.log(req.params.userID)
@@ -100,7 +100,7 @@ router.get('/api/participatedEvents/ids/:userID', async (req, res) => {
   }
 })
 
-router.get('/api/participatedEvents/:userID', async (req, res) => {
+router.get('/participatedEvents/:userID', async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.userID)
     const participatedEvents = await EventModel.find({
@@ -113,38 +113,35 @@ router.get('/api/participatedEvents/:userID', async (req, res) => {
   }
 })
 
-router.put(
-  '/api/participatedEvents/remove/:userID/:eventID',
-  async (req, res) => {
-    try {
-      const event = await EventModel.findById(req.params.eventID)
-      const user = await UserModel.findById(req.params.userID)
-      // user.participatedEvents.pop(event)
-      // event.participants.pop(user)
-      const eventIndex = user.participatedEvents.indexOf(event._id)
-      const userIndex = event.participants.indexOf(user._id)
-      if (eventIndex > -1) {
-        console.log('user')
-        user.participatedEvents.splice(eventIndex, 1)
-      }
-      if (userIndex > -1) {
-        console.log('event')
-        event.participants.splice(userIndex, 1)
-      }
-      await event.save()
-      await user.save()
-      res.status(200)
-      res.json(user.participatedEvents)
-      return res
-    } catch (err) {
-      console.log(err.message)
-      res.status(400)
-      res.json(err)
+router.put('/participatedEvents/remove/:userID/:eventID', async (req, res) => {
+  try {
+    const event = await EventModel.findById(req.params.eventID)
+    const user = await UserModel.findById(req.params.userID)
+    // user.participatedEvents.pop(event)
+    // event.participants.pop(user)
+    const eventIndex = user.participatedEvents.indexOf(event._id)
+    const userIndex = event.participants.indexOf(user._id)
+    if (eventIndex > -1) {
+      console.log('user')
+      user.participatedEvents.splice(eventIndex, 1)
     }
+    if (userIndex > -1) {
+      console.log('event')
+      event.participants.splice(userIndex, 1)
+    }
+    await event.save()
+    await user.save()
+    res.status(200)
+    res.json(user.participatedEvents)
+    return res
+  } catch (err) {
+    console.log(err.message)
+    res.status(400)
+    res.json(err)
   }
-)
+})
 
-router.get('/api/createdEvents/:userID', async (req, res) => {
+router.get('/createdEvents/:userID', async (req, res) => {
   try {
     const events = await EventModel.find({ userOwner: req.params.userID })
     res.json(events)
@@ -154,7 +151,7 @@ router.get('/api/createdEvents/:userID', async (req, res) => {
   }
 })
 
-router.get('/api/createdEvents/hobbies/:userID', async (req, res) => {
+router.get('/createdEvents/hobbies/:userID', async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.userID)
     const userHobbies = []

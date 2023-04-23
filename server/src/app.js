@@ -9,9 +9,9 @@ import config from '../utils/config.js'
 const app = express()
 app.use(express.json())
 app.use(cors())
-app.use('/auth', userRouter)
-app.use('/events', eventsRouter)
-app.use('/hobbies', hobbiesRouter)
+app.use('/api/auth', userRouter)
+app.use('/api/events', eventsRouter)
+app.use('/api/hobbies', hobbiesRouter)
 
 console.log(process.env.NODE_ENV)
 
