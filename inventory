@@ -1,0 +1,2 @@
+[demo]
+client1 ansible_host=172.16.129.93 anssible_connection=ssh ansible_user=jayant

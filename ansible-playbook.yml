@@ -1,0 +1,8 @@
+---
+- name: Deploy Docker Images
+  hosts: all
+  tasks:
+    - name: Copy Kubernetes Compose files from host machine to remote host
+      copy:
+        src: ./kubernetes-config/kubernetes-backend.yaml
+        dest: ./
