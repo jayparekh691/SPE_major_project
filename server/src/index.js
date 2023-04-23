@@ -1,3 +1,4 @@
 import app from './app.js'
+import config from '../utils/config.js'
 
-app.listen(3001, () => console.log('Server Started'))
+app.listen(config.PORT, () => console.log('Server Started'))

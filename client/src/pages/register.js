@@ -5,7 +5,7 @@ import axios from 'axios'
 import { BACKEND_URL } from '../config'
 import { FRONTEND_URL } from '../config'
 
-const backend = BACKEND_URL
+const backend = BACKEND_URL + '/api'
 
 const Register = () => {
   console.log(backend)

@@ -3,7 +3,7 @@ import { useGetUserID } from '../hooks/useGetUserID'
 import axios from 'axios'
 import { BACKEND_URL } from '../config'
 
-const backend = BACKEND_URL
+const backend = BACKEND_URL + '/api'
 
 export default function ParticipatedEvents() {
   const [participatedEvents, setParticipatedEvents] = useState([])

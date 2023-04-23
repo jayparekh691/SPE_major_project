@@ -21,9 +21,9 @@ spec:
           #     cpu: "500m"
           ports:
             - containerPort: 3000
-        #   envFrom:
-        #     - configMapRef:
-        #         name: socialconnect-frontend-configmap
+          envFrom:
+            - configMapRef:
+                name: socialconnect-frontend-configmap
 ---
 apiVersion: v1
 kind: Service

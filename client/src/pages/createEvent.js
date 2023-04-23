@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import { BACKEND_URL } from '../config'
 
-const backend = BACKEND_URL
+const backend = BACKEND_URL + '/api'
 
 export default function CreateEvent() {
   const userID = useGetUserID()

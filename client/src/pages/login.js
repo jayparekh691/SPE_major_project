@@ -6,7 +6,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { BACKEND_URL } from '../config'
 
-const backend = BACKEND_URL
+const backend = BACKEND_URL + '/api'
 
 export const validateInput = (str = '') => str.includes('@')
 

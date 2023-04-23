@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom'
 import Navbar from '../components/navbar'
 import { BACKEND_URL } from '../config'
 
-const backend = BACKEND_URL
+const backend = BACKEND_URL + '/api'
 
 export default function AddHobbies() {
   const [hobbies, setHobbies] = useState([])

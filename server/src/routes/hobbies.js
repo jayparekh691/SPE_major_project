@@ -2,11 +2,11 @@ import express from 'express'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { HobbyModel } from '../models/Hobbies.js'
-import {UserModel} from "../models/Users.js"
+import { UserModel } from '../models/Users.js'
 
 const router = express.Router()
 
-router.get('/', async (req, res) => {
+router.get('/api/', async (req, res) => {
   try {
     const response = await HobbyModel.find({})
     res.json(response)
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.post('/', async (req, res) => {
+router.post('/api/', async (req, res) => {
   const event = new HobbyModel(req.body)
   try {
     const response = await event.save()
@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
   }
 })
 
-router.put('/', async (req, res) => {
+router.put('/api/', async (req, res) => {
   try {
     const hobby = await HobbyModel.findById(req.body.hobbyID)
     const user = await UserModel.findById(req.body.userID)
@@ -43,7 +43,7 @@ router.put('/', async (req, res) => {
 })
 
 // LIST OF ALL THE HOBBIES OF A USER
-router.get('/interestedHobbies/:userID', async (req, res) => {
+router.get('/api/interestedHobbies/:userID', async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.userID)
     const hobbies = await HobbyModel.find({
@@ -56,20 +56,19 @@ router.get('/interestedHobbies/:userID', async (req, res) => {
 })
 
 // REMOVE HOBBY OF A USER
-router.put('/:hobbyID/user/:userID', async (req, res) => {
+router.put('/api/:hobbyID/user/:userID', async (req, res) => {
   try {
     const hobby = await HobbyModel.findById(req.params.hobbyID)
     const user = await UserModel.findById(req.params.userID)
     // console.log("hobby.hobbyName")
-    const userIndex = hobby.userList.indexOf(req.params.userID);
-    const hobbyIndex = user.hobbies.indexOf(req.params.hobbyID);
-
+    const userIndex = hobby.userList.indexOf(req.params.userID)
+    const hobbyIndex = user.hobbies.indexOf(req.params.hobbyID)
 
     if (userIndex > -1) {
-      hobby.userList.splice(userIndex, 1);
+      hobby.userList.splice(userIndex, 1)
     }
-    if(hobbyIndex>-1){
-      user.hobbies.splice(hobbyIndex,1);
+    if (hobbyIndex > -1) {
+      user.hobbies.splice(hobbyIndex, 1)
     }
     await hobby.save()
     await user.save()
