@@ -21,7 +21,7 @@ let env = null
 /*
 NEW CONFIG FOR K8s DEPLOYMENT
 */
-env = process.env
+// env = process.env
 
 // const PORT = 3001
 // const MONGODB_URI =
