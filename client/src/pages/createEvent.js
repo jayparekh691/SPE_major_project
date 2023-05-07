@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import DatePicker from 'react-date-picker';
+import 'react-date-picker/dist/DatePicker.css';
+import 'react-calendar/dist/Calendar.css';
 import { useGetUserID } from '../hooks/useGetUserID'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
@@ -11,6 +14,8 @@ export default function CreateEvent() {
   const userID = useGetUserID()
   const [cookies, _] = useCookies(['access_token'])
   const [hobbies, setHobbies] = useState([])
+  const [selectedRegistrationDate,setSelectedRegistrationDate] = useState(new Date())
+  const [selectedEventDate, setSelectedEventDate] = useState(new Date())
   const [newevent, setNewEvent] = useState({
     eventname: '',
     hobbyname: '',
@@ -44,12 +49,23 @@ export default function CreateEvent() {
   const handleChange = (event) => {
     const { name, value } = event.target
     setNewEvent({ ...newevent, [name]: value })
-    console.log(name, value)
+    // console.log(name, value)
+  }
+
+  const handleChangeRegistrationDate = (date)=>{
+    setSelectedRegistrationDate(date)
+    let formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    newevent.registrationDate=formattedDate
+  }
+
+  const handleChangeEventDate = (date)=>{
+    setSelectedEventDate(date)
+    let formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    newevent.eventDate=formattedDate
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-
     try {
       await axios.post(
         backend + '/events',
@@ -66,10 +82,11 @@ export default function CreateEvent() {
     }
   }
 
+
   return (
-    <div className="create-event">
+    <div className="auth-form-container">
       <h2>Create event</h2>
-      <form onSubmit={handleSubmit}>
+      <form className="create-event" onSubmit={handleSubmit}>
         <label htmlFor="eventname">Event Name:</label>
         <input
           type="text"
@@ -83,14 +100,6 @@ export default function CreateEvent() {
         <br />
 
         <label htmlFor="hobbyname">Hobby Name:</label>
-        {/* <input
-          type="text"
-          id="hobbyname"
-          name="hobbyname"
-          value={newevent.hobbyname}
-          onChange={handleChange}
-          required
-        /> */}
         <select
           type="text"
           id="hobbyname"
@@ -108,13 +117,10 @@ export default function CreateEvent() {
         <br />
 
         <label htmlFor="registrationDate">Registration Date Deadline:</label>
-        <input
-          type="text"
-          id="registrationDate"
-          name="registrationDate"
-          value={newevent.registrationDate}
-          onChange={handleChange}
-          required
+
+        <DatePicker
+            value={selectedRegistrationDate}
+            onChange={handleChangeRegistrationDate}
         />
         <br />
         <br />
@@ -166,13 +172,9 @@ export default function CreateEvent() {
         <br />
 
         <label htmlFor="eventDate">Event Date:</label>
-        <input
-          type="text"
-          id="eventDate"
-          name="eventDate"
-          value={newevent.eventDate}
-          onChange={handleChange}
-          required
+        <DatePicker
+            value={selectedEventDate}
+            onChange={handleChangeEventDate}
         />
         <br />
         <br />

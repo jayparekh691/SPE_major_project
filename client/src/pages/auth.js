@@ -11,9 +11,9 @@ import Register from "./register";
 
 export default function Auth() {
   return (
-    <div className="auth" style={{backgroundColor:'lightblue'}}>
+    <div className="auth">
       <Login />
-      <Register />
+      {/*<Register />*/}
     </div>
   )
 }
