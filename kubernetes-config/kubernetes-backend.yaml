@@ -26,6 +26,14 @@ spec:
           envFrom:
             - secretRef:
                 name: socialconnect-backend-secret
+          volumeMounts:
+            - name: karaf-conf-storage
+              mountPath: '/usr/src/app/src'
+        # Use hostPath here
+      volumes:
+        - name: karaf-conf-storage
+          hostPath:
+            path: '/home/SPE/storage'
 ---
 apiVersion: v1
 kind: Service

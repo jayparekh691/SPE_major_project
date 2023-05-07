@@ -1,5 +1,0 @@
-POST /api/auth/login 200 196 - 177.994 ms
-GET /api/events/participatedEvents/ids/643e5f21f136e1f7bc4e36ac 304 - - 24.426 ms
-GET /api/events/participatedEvents/ids/643e5f21f136e1f7bc4e36ac 304 - - 23.720 ms
-GET /api/events/643e5f21f136e1f7bc4e36ac 304 - - 307.669 ms
-GET /api/events/643e5f21f136e1f7bc4e36ac 304 - - 319.680 ms

@@ -10,8 +10,8 @@
         owner: jay
         group: jay
         mode: 0644
-    # - name: Change directory
-    #   command: cd kubernetes-config
+    - name: Delete minikube
+      command: minikube delete
     - name: Start Minikube
       command: minikube start
     - name: Create namespace
@@ -20,6 +20,10 @@
       command: kubectl apply -f kubernetes-config/kubernetes-secret.yaml
     - name: Apply frontend
       command: kubectl apply -f kubernetes-config/kubernetes-frontend.yaml
+    - name: Apply Persistant volume
+      command: kubectl apply -f kubernetes-config/kubernetes-volume.yaml
+    - name: Apply Persistant volume claim
+      command: kubectl create -f kubernetes-config/kubernetes-volume-claim.yaml
     - name: Apply backend
       command: kubectl apply -f kubernetes-config/kubernetes-backend.yaml
     - name: Apply ingress
