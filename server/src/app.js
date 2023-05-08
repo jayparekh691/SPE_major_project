@@ -23,12 +23,7 @@ const accessLogStream = fs.createWriteStream(
   path.join(__dirname, './logs/access.log'),
   { flags: 'a' }
 )
-app.use(
-  morgan(
-    ':date[web] :method :url :status :res[content-length] - :response-time ms :data',
-    { stream: accessLogStream }
-  )
-)
+app.use(morgan('tiny', { stream: accessLogStream }))
 app.use('/api/auth', userRouter)
 app.use('/api/events', eventsRouter)
 app.use('/api/hobbies', hobbiesRouter)
