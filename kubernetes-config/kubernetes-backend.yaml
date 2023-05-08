@@ -28,12 +28,12 @@ spec:
                 name: socialconnect-backend-secret
           volumeMounts:
             - name: karaf-conf-storage
-              mountPath: '/usr/src/app/src'
+              mountPath: '/usr/src/app/src/logs'
         # Use hostPath here
       volumes:
         - name: karaf-conf-storage
           hostPath:
-            path: '/home/SPE/storage'
+            path: '/tmp/data'
 ---
 apiVersion: v1
 kind: Service
