@@ -54,7 +54,7 @@ describe('Create Event api', () => {
 
 describe('Get Events API', () => {
   test('Provides list of all events for user with response code 200', async () => {
-    await api.get('/events/' + '626bae84e8e209ce46777190').expect(200)
+    await api.get('/api/events/' + '626bae84e8e209ce46777190').expect(200)
   }, 50000)
   test('Provides list of events id where user has participated with status code 200', async () => {
     await api.get('/api/events/participatedEvents')
