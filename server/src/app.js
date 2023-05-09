@@ -30,25 +30,27 @@ app.use('/api/hobbies', hobbiesRouter)
 
 console.log(process.env.NODE_ENV)
 
-// if (process.env.NODE_ENV === 'testing') {
-//   mongoose.connect(
-//     'mongodb+srv://jayparekh:rock123A@cluster0.awazspn.mongodb.net/Cluster0?retryWrites=true&w=majority'
-//   )
-// } else {
+if (process.env.NODE_ENV === 'testing') {
+  mongoose.connect(
+    'mongodb+srv://jayparekh:rock123A@cluster0.awazspn.mongodb.net/Cluster0?retryWrites=true&w=majority'
+  )
+}
+// else {
 //   mongoose.connect(
 //     'mongodb+srv://jayparekh:rock123A@production.074bxra.mongodb.net/?retryWrites=true&w=majority'
 //   )
 // }
-
-mongoose
-  .connect(config.MONGODB_URI)
-  .then(() => {
-    console.log(config.MONGODB_URI)
-    console.log(config.PORT)
-  })
-  .catch((error) => {
-    console.log(error.message)
-    // logger.error(`Failed to connect to MongoDB: ${error.message}`)
-  })
+else {
+  mongoose
+    .connect(config.MONGODB_URI)
+    .then(() => {
+      console.log(config.MONGODB_URI)
+      console.log(config.PORT)
+    })
+    .catch((error) => {
+      console.log(error.message)
+      // logger.error(`Failed to connect to MongoDB: ${error.message}`)
+    })
+}
 
 export default app
