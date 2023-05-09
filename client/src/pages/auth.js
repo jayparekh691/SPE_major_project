@@ -10,10 +10,10 @@ import Register from "./register";
 
 
 export default function Auth() {
-  return (
-    <div className="auth" style={{backgroundColor:'lightblue'}}>
-      <Login />
-      <Register />
-    </div>
-  )
+    return (
+        <div className="auth">
+            <Login />
+            {/*<Register />*/}
+        </div>
+    )
 }

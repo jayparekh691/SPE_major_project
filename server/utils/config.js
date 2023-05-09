@@ -21,16 +21,16 @@ let env = null
 /*
 NEW CONFIG FOR K8s DEPLOYMENT
 */
-// env = process.env
-
-// const PORT = 3001
-// const MONGODB_URI =
-//   'mongodb+srv://jayparekh:rock123A@production.074bxra.mongodb.net/?retryWrites=true&w=majority'
-// const SECRET = env.SECRET
-
 env = process.env
 
-const PORT = env.PORT
-const MONGODB_URI = env.MONGODB_URI
+const PORT = 3001
+const MONGODB_URI =
+  'mongodb+srv://jayparekh:rock123A@production.074bxra.mongodb.net/?retryWrites=true&w=majority'
+// const SECRET = env.SECRET
+
+// env = process.env
+//
+// const PORT = env.PORT
+// const MONGODB_URI = env.MONGODB_URI
 
 export default { PORT, MONGODB_URI }

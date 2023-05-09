@@ -11,7 +11,7 @@ const backend = BACKEND_URL + '/api'
 export const validateInput = (str = '') => str.includes('@')
 
 export default function Login() {
-  console.log(backend)
+  // console.log(backend)
   const [_, setCookies] = useCookies(['access_token'])
 
   const [username, setUsername] = useState('')
@@ -37,31 +37,28 @@ export default function Login() {
   }
 
   return (
-    <div className="auth-container">
-      <form onSubmit={handleSubmit}>
+      <div className="auth-form-container">
         <h2>Login</h2>
-        <div className="form-group">
+        <form className="login-form" onSubmit={handleSubmit}>
           <label htmlFor="username">Username:</label>
           <input
-            required
-            type="text"
-            id="username"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
+              required
+              type="text"
+              id="username"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
           />
-        </div>
-        <div className="form-group">
           <label htmlFor="password">Password:</label>
           <input
-            required
-            type="password"
-            id="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
+              required
+              type="password"
+              id="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
           />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
+          <button type="submit">Log In</button>
+        </form>
+        <button className="link-btn" onClick={() => navigate('/register')}>Don't have an account? Register here.</button>
+      </div>
   )
 }

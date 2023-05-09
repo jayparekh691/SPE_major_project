@@ -25,7 +25,7 @@ export default function AddHobbies() {
     const fetchSelectedHobbies = async () => {
       try {
         const response = await axios.get(
-          backend + '/hobbies/interestedHobbies/' + userID
+            backend + '/hobbies/interestedHobbies/' + userID
         )
         console.log(response.data.hobbies)
         setSelectedHobbies(response.data.hobbies)
@@ -80,34 +80,34 @@ export default function AddHobbies() {
   }
 
   return (
-    <div>
-      <h1>Hobbies</h1>
-      <ul>
-        {hobbies.map((h) => (
-          <li key={h._id}>
-            <div>
-              <h2>{h.hobbyName}</h2>
-              <button
-                onClick={() => selectHobby(h._id)}
-                disabled={isAdded(h._id)}
-              >
-                Add
-              </button>
-              <button
-                onClick={() => removeHobby(h._id)}
-                disabled={!isAdded(h._id)}
-              >
-                Delete
-              </button>
-              <br />
-              <br />
-            </div>
-            <div className="hobbyDescription">
-              <h4>Hobby Description : {h.hobbyDescription}</h4>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <div>
+        <h1>Hobbies</h1>
+        <ul>
+          {hobbies.map((h) => (
+              <li key={h._id}>
+                <div>
+                  <h2>{h.hobbyName}</h2>
+                  <button
+                      onClick={() => selectHobby(h._id)}
+                      disabled={isAdded(h._id)}
+                  >
+                    Add
+                  </button>
+                  <button
+                      onClick={() => removeHobby(h._id)}
+                      disabled={!isAdded(h._id)}
+                  >
+                    Delete
+                  </button>
+                  <br />
+                  <br />
+                </div>
+                <div className="hobbyDescription">
+                  <h4>Hobby Description : {h.hobbyDescription}</h4>
+                </div>
+              </li>
+          ))}
+        </ul>
+      </div>
   )
 }

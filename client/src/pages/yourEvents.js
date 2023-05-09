@@ -16,7 +16,7 @@ export default function YourEvents() {
     const fetchEvents = async () => {
       try {
         const response = await axios.get(
-          backend + '/events/createdEvents/' + userID
+            backend + '/events/createdEvents/' + userID
         )
         console.log(response)
         setEvents(response.data)
@@ -38,44 +38,44 @@ export default function YourEvents() {
   }
 
   return (
-    <div>
-      <h1>Your events</h1>
-      <ul>
-        {events.map((e) => (
-          <li key={e._id}>
-            <div>
-              <h2>{e.eventname}</h2>
-              <button onClick={() => deleteEvent(e._id)}>Delete</button>
-              <br />
-              <br />
-            </div>
-            <div className="hobbyname">
-              <h4>Hobby Name : {e.hobbyname}</h4>
-            </div>
-            <div className="registrationDate">
-              <h4>Registration Date : {e.registrationDate}</h4>
-            </div>
-            <div className="location">
-              <h4>Location : {e.location}</h4>
-            </div>
-            <div className="district">
-              <h4>District : {e.district}</h4>
-            </div>
-            <div className="state">
-              <h4>State : {e.state}</h4>
-            </div>
-            <div className="eventDate">
-              <h4>Event Date : {e.eventDate}</h4>
-            </div>
-            <div className="minParticipation">
-              <h4>Min Participation required : {e.minParticipation}</h4>
-            </div>
-            <div className="currParticipation">
-              <h4>Current Participant Count : {e.participants.length}</h4>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <div>
+        <h1>Your events</h1>
+        <ul>
+          {events.map((e) => (
+              <li key={e._id}>
+                <div>
+                  <h2>{e.eventname}</h2>
+                  <button onClick={() => deleteEvent(e._id)}>Delete</button>
+                  <br />
+                  <br />
+                </div>
+                <div className="hobbyname">
+                  <h4>Hobby Name : {e.hobbyname}</h4>
+                </div>
+                <div className="registrationDate">
+                  <h4>Registration Date : {e.registrationDate}</h4>
+                </div>
+                <div className="location">
+                  <h4>Location : {e.location}</h4>
+                </div>
+                <div className="district">
+                  <h4>District : {e.district}</h4>
+                </div>
+                <div className="state">
+                  <h4>State : {e.state}</h4>
+                </div>
+                <div className="eventDate">
+                  <h4>Event Date : {e.eventDate}</h4>
+                </div>
+                <div className="minParticipation">
+                  <h4>Min Participation required : {e.minParticipation}</h4>
+                </div>
+                <div className="currParticipation">
+                  <h4>Current Participant Count : {e.participants.length}</h4>
+                </div>
+              </li>
+          ))}
+        </ul>
+      </div>
   )
 }

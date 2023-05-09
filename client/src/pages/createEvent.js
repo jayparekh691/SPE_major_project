@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import DatePicker from 'react-date-picker';
+import 'react-date-picker/dist/DatePicker.css';
+import 'react-calendar/dist/Calendar.css';
 import { useGetUserID } from '../hooks/useGetUserID'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
@@ -11,6 +14,8 @@ export default function CreateEvent() {
   const userID = useGetUserID()
   const [cookies, _] = useCookies(['access_token'])
   const [hobbies, setHobbies] = useState([])
+  const [selectedRegistrationDate,setSelectedRegistrationDate] = useState(new Date())
+  const [selectedEventDate, setSelectedEventDate] = useState(new Date())
   const [newevent, setNewEvent] = useState({
     eventname: '',
     hobbyname: '',
@@ -30,7 +35,7 @@ export default function CreateEvent() {
       console.log('JAY')
       try {
         const response = await axios.get(
-          backend + '/events/createdEvents/hobbies/' + userID
+            backend + '/events/createdEvents/hobbies/' + userID
         )
         setHobbies(response.data.hobbies)
         console.log(hobbies.length)
@@ -44,19 +49,30 @@ export default function CreateEvent() {
   const handleChange = (event) => {
     const { name, value } = event.target
     setNewEvent({ ...newevent, [name]: value })
-    console.log(name, value)
+    // console.log(name, value)
+  }
+
+  const handleChangeRegistrationDate = (date)=>{
+    setSelectedRegistrationDate(date)
+    let formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    newevent.registrationDate=formattedDate
+  }
+
+  const handleChangeEventDate = (date)=>{
+    setSelectedEventDate(date)
+    let formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    newevent.eventDate=formattedDate
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-
     try {
       await axios.post(
-        backend + '/events',
-        { ...newevent },
-        {
-          headers: { authorization: cookies.access_token },
-        }
+          backend + '/events',
+          { ...newevent },
+          {
+            headers: { authorization: cookies.access_token },
+          }
       )
 
       alert('Event Created')
@@ -66,131 +82,117 @@ export default function CreateEvent() {
     }
   }
 
+
   return (
-    <div className="create-event">
-      <h2>Create event</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="eventname">Event Name:</label>
-        <input
-          type="text"
-          id="eventname"
-          name="eventname"
-          value={newevent.eventname}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        <br />
+      <div className="auth-form-container">
+        <h2>Create event</h2>
+        <form className="create-event" onSubmit={handleSubmit}>
+          <label htmlFor="eventname">Event Name:</label>
+          <input
+              type="text"
+              id="eventname"
+              name="eventname"
+              value={newevent.eventname}
+              onChange={handleChange}
+              required
+          />
+          <br />
+          <br />
 
-        <label htmlFor="hobbyname">Hobby Name:</label>
-        {/* <input
-          type="text"
-          id="hobbyname"
-          name="hobbyname"
-          value={newevent.hobbyname}
-          onChange={handleChange}
-          required
-        /> */}
-        <select
-          type="text"
-          id="hobbyname"
-          name="hobbyname"
-          value={newevent.hobbyname}
-          onChange={handleChange}
-          required
-        >
-          <option>Select Hobby</option>
-          {hobbies?.map((hobby) => {
-            return <option>{hobby}</option>
-          })}
-        </select>
-        <br />
-        <br />
+          <label htmlFor="hobbyname">Hobby Name:</label>
+          <select
+              type="text"
+              id="hobbyname"
+              name="hobbyname"
+              value={newevent.hobbyname}
+              onChange={handleChange}
+              required
+          >
+            <option>Select Hobby</option>
+            {hobbies?.map((hobby) => {
+              return <option>{hobby}</option>
+            })}
+          </select>
+          <br />
+          <br />
 
-        <label htmlFor="registrationDate">Registration Date Deadline:</label>
-        <input
-          type="text"
-          id="registrationDate"
-          name="registrationDate"
-          value={newevent.registrationDate}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        <br />
+          <label htmlFor="registrationDate">Registration Date Deadline:</label>
 
-        <label htmlFor="location">Location:</label>
-        <input
-          type="text"
-          id="location"
-          name="location"
-          value={newevent.location}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        <br />
+          <DatePicker
+              value={selectedRegistrationDate}
+              onChange={handleChangeRegistrationDate}
+          />
+          <br />
+          <br />
 
-        <label htmlFor="district">District:</label>
-        <input
-          type="text"
-          id="district"
-          name="district"
-          value={newevent.district}
-          onChange={handleChange}
-        />
-        <br />
-        <br />
+          <label htmlFor="location">Location:</label>
+          <input
+              type="text"
+              id="location"
+              name="location"
+              value={newevent.location}
+              onChange={handleChange}
+              required
+          />
+          <br />
+          <br />
 
-        <label htmlFor="state">State:</label>
-        <input
-          type="text"
-          id="state"
-          name="state"
-          value={newevent.state}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        <br />
+          <label htmlFor="district">District:</label>
+          <input
+              type="text"
+              id="district"
+              name="district"
+              value={newevent.district}
+              onChange={handleChange}
+          />
+          <br />
+          <br />
 
-        <label htmlFor="description">Description:</label>
-        <textarea
-          id="description"
-          name="description"
-          value={newevent.description}
-          onChange={handleChange}
-          required
-        ></textarea>
-        <br />
-        <br />
+          <label htmlFor="state">State:</label>
+          <input
+              type="text"
+              id="state"
+              name="state"
+              value={newevent.state}
+              onChange={handleChange}
+              required
+          />
+          <br />
+          <br />
 
-        <label htmlFor="eventDate">Event Date:</label>
-        <input
-          type="text"
-          id="eventDate"
-          name="eventDate"
-          value={newevent.eventDate}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        <br />
+          <label htmlFor="description">Description:</label>
+          <textarea
+              id="description"
+              name="description"
+              value={newevent.description}
+              onChange={handleChange}
+              required
+          ></textarea>
+          <br />
+          <br />
 
-        <label htmlFor="minParticipation">Minimum Participation:</label>
-        <input
-          type="number"
-          id="minParticipation"
-          name="minParticipation"
-          value={newevent.minParticipation}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        <br />
+          <label htmlFor="eventDate">Event Date:</label>
+          <DatePicker
+              value={selectedEventDate}
+              onChange={handleChangeEventDate}
+          />
+          <br />
+          <br />
 
-        <button type="submit">Create event</button>
-      </form>
-    </div>
+          <label htmlFor="minParticipation">Minimum Participation:</label>
+          <input
+              type="number"
+              id="minParticipation"
+              name="minParticipation"
+              value={newevent.minParticipation}
+              onChange={handleChange}
+              required
+          />
+          <br />
+          <br />
+
+          <button type="submit">Create event</button>
+        </form>
+      </div>
   )
 }
