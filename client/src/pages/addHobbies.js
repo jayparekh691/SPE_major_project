@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useGetUserID } from '../hooks/useGetUserID'
 import axios from 'axios'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/navbar'
 import { BACKEND_URL } from '../config'
 
@@ -12,6 +12,8 @@ export default function AddHobbies() {
   const [selectedHobbies, setSelectedHobbies] = useState([])
   const userID = useGetUserID()
 
+  const navigate = useNavigate()
+  if (userID === null) navigate('/')
   useEffect(() => {
     const fetchHobbies = async () => {
       try {
@@ -25,7 +27,7 @@ export default function AddHobbies() {
     const fetchSelectedHobbies = async () => {
       try {
         const response = await axios.get(
-            backend + '/hobbies/interestedHobbies/' + userID
+          backend + '/hobbies/interestedHobbies/' + userID
         )
         console.log(response.data.hobbies)
         setSelectedHobbies(response.data.hobbies)
@@ -80,34 +82,34 @@ export default function AddHobbies() {
   }
 
   return (
-      <div>
-        <h1>Hobbies</h1>
-        <ul>
-          {hobbies.map((h) => (
-              <li key={h._id}>
-                <div>
-                  <h2>{h.hobbyName}</h2>
-                  <button
-                      onClick={() => selectHobby(h._id)}
-                      disabled={isAdded(h._id)}
-                  >
-                    Add
-                  </button>
-                  <button
-                      onClick={() => removeHobby(h._id)}
-                      disabled={!isAdded(h._id)}
-                  >
-                    Delete
-                  </button>
-                  <br />
-                  <br />
-                </div>
-                <div className="hobbyDescription">
-                  <h4>Hobby Description : {h.hobbyDescription}</h4>
-                </div>
-              </li>
-          ))}
-        </ul>
-      </div>
+    <div>
+      <h1>Hobbies</h1>
+      <ul>
+        {hobbies.map((h) => (
+          <li key={h._id}>
+            <div>
+              <h2>{h.hobbyName}</h2>
+              <button
+                onClick={() => selectHobby(h._id)}
+                disabled={isAdded(h._id)}
+              >
+                Add
+              </button>
+              <button
+                onClick={() => removeHobby(h._id)}
+                disabled={!isAdded(h._id)}
+              >
+                Delete
+              </button>
+              <br />
+              <br />
+            </div>
+            <div className="hobbyDescription">
+              <h4>Hobby Description : {h.hobbyDescription}</h4>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }

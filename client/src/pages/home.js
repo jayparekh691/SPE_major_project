@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useGetUserID } from '../hooks/useGetUserID'
 import axios from 'axios'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/navbar'
 import { BACKEND_URL } from '../config'
 
@@ -11,7 +11,8 @@ export default function Home() {
   const [events, setEvents] = useState([])
   const [participatedEvents, setParticipatedEvents] = useState([])
   const userID = useGetUserID()
-
+  const navigate = useNavigate()
+  if (userID === null) navigate('/')
   useEffect(() => {
     const fetchEvents = async () => {
       try {
