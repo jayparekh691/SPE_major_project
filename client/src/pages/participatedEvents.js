@@ -3,18 +3,21 @@ import { useGetUserID } from '../hooks/useGetUserID'
 import axios from 'axios'
 import { BACKEND_URL } from '../config'
 import {Button, Card} from "react-bootstrap";
+import { useNavigate } from 'react-router-dom'
 
 const backend = BACKEND_URL + '/api'
 
 export default function ParticipatedEvents() {
   const [participatedEvents, setParticipatedEvents] = useState([])
   const userID = useGetUserID()
+  const navigate = useNavigate()
+  if (userID === null) navigate('/')
 
   useEffect(() => {
     const fetchParticipatedEvents = async () => {
       try {
         const response = await axios.get(
-            backend + '/events/participatedEvents/' + userID
+          backend + '/events/participatedEvents/' + userID
         )
         setParticipatedEvents(response.data.participatedEvents)
       } catch (err) {
@@ -27,7 +30,7 @@ export default function ParticipatedEvents() {
   const remove = async (eventID) => {
     try {
       const response = await axios.put(
-          backend + '/events/participatedEvents/remove/' + userID + '/' + eventID
+        backend + '/events/participatedEvents/remove/' + userID + '/' + eventID
       )
       alert('Removed')
       setParticipatedEvents(response.data.participatedEvents)
@@ -43,7 +46,7 @@ export default function ParticipatedEvents() {
           <h1>Participated Events</h1>
         </div>
 
-        {participatedEvents.length != undefined && participatedEvents.map((e) => (
+        {participatedEvents!== undefined && participatedEvents.map((e) => (
             <Card style={{width: '18rem',margin:"1rem"}}>
               <Card.Body>
                 <Card.Title>{e.eventname}</Card.Title>
@@ -65,5 +68,6 @@ export default function ParticipatedEvents() {
         ))
         }
       </div>
+
   )
 }

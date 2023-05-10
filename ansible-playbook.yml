@@ -30,3 +30,12 @@
       command: kubectl apply -f kubernetes-config/kubernetes-ingress.yaml
     - name: Ingress addons
       command: minikube addons enable ingress
+    - name: Update the /etc/hosts file with node name
+      tags: etchostsupdate
+      become: yes
+      become_user: root
+      lineinfile:
+        path: '/etc/hosts'
+        line: '192.168.49.2    socialconnect.com'
+        state: present
+        backup: yes

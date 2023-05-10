@@ -4,9 +4,13 @@ import { UserModel } from '../models/Users'
 import { application, response } from 'express'
 import { jest } from '@jest/globals'
 import app from '../app.js'
-import {initializeEvents, initializeHobbies, initializeUsers} from "./test_helper.js";
-import {HobbyModel} from "../models/Hobbies.js";
-import {EventModel} from "../models/Events.js";
+import {
+  initializeEvents,
+  initializeHobbies,
+  initializeUsers,
+} from './test_helper.js'
+import { HobbyModel } from '../models/Hobbies.js'
+import { EventModel } from '../models/Events.js'
 const api = supertest(app)
 
 beforeAll(async () => {
@@ -27,27 +31,27 @@ describe('Login api', () => {
         username: 'jayantmukundam',
         password: 'jayant',
       }
-      await api.post('/auth/login').send(user).expect(200)
+      await api.post('/api/auth/login').send(user).expect(200)
     })
-  },30000)
+  }, 30000)
   describe('Give a username and password', () => {
     test('Incorrect username or password responds with status code 400', async () => {
       const user = {
         username: 'jayantmukundam2811',
         password: 'mukundam',
       }
-      await api.post('/auth/login').send(user).expect(400)
+      await api.post('/api/auth/login').send(user).expect(400)
     })
-  },30000)
+  }, 30000)
   describe('Give a username and password', () => {
     test("Username doesn't exist responds with status code 400", async () => {
       const user = {
         username: 'mukundam',
         password: 'jayant',
       }
-      await api.post('/auth/login').send(user).expect(400)
+      await api.post('/api/auth/login').send(user).expect(400)
     })
-  },30000)
+  }, 30000)
 })
 
 describe('Create user API', () => {
@@ -63,7 +67,7 @@ describe('Create user API', () => {
         gender: 'saijdfj',
         mobilenumber: '546840',
       }
-      await api.post('/auth/register').send(user).expect(200)
+      await api.post('/api/auth/register').send(user).expect(200)
     }, 50000)
 
     test('Duplicate username responds with status code 400', async () => {
@@ -77,11 +81,10 @@ describe('Create user API', () => {
         gender: 'saijdfj',
         mobilenumber: '546840',
       }
-      await api.post('/auth/register').send(user).expect(400)
+      await api.post('/api/auth/register').send(user).expect(400)
     }, 50000)
   })
 })
-
 
 afterAll(() => {
   mongoose.connection.close()

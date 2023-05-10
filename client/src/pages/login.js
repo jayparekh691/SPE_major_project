@@ -13,6 +13,10 @@ export const validateInput = (str = '') => str.includes('@')
 
 export default function Login() {
   // console.log(backend)
+  window.history.forward()
+  window.onunload = async function () {
+    return
+  }
   const [_, setCookies] = useCookies(['access_token'])
 
   const [username, setUsername] = useState('')
@@ -63,5 +67,6 @@ export default function Login() {
         </Form>
         <button className="link-btn" onClick={() => navigate('/register')}>Don't have an account? Register here.</button>
       </div>
+
   )
 }

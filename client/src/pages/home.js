@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useGetUserID } from '../hooks/useGetUserID'
 import axios from 'axios'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/navbar'
 import { BACKEND_URL } from '../config'
 import {Button, Card} from "react-bootstrap";
@@ -12,7 +12,8 @@ export default function Home() {
   const [events, setEvents] = useState([])
   const [participatedEvents, setParticipatedEvents] = useState([])
   const userID = useGetUserID()
-
+  const navigate = useNavigate()
+  if (userID === null) navigate('/')
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -27,7 +28,7 @@ export default function Home() {
     const fetchParticipatedEvents = async () => {
       try {
         const response = await axios.get(
-            backend + '/events/participatedEvents/ids/' + userID
+          backend + '/events/participatedEvents/ids/' + userID
         )
         console.log(response.data.participatedEvents)
         setParticipatedEvents(response.data.participatedEvents)
@@ -86,5 +87,6 @@ export default function Home() {
         ))
         }
       </div>
+
   )
 }

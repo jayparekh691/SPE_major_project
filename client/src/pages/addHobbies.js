@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useGetUserID } from '../hooks/useGetUserID'
 import Card from 'react-bootstrap/Card';
 import axios from 'axios'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/navbar'
 import { BACKEND_URL } from '../config'
 import cricket from '../cricket.jpeg'
@@ -15,6 +15,8 @@ export default function AddHobbies() {
   const [selectedHobbies, setSelectedHobbies] = useState([])
   const userID = useGetUserID()
 
+  const navigate = useNavigate()
+  if (userID === null) navigate('/')
   useEffect(() => {
     const fetchHobbies = async () => {
       try {
@@ -28,7 +30,7 @@ export default function AddHobbies() {
     const fetchSelectedHobbies = async () => {
       try {
         const response = await axios.get(
-            backend + '/hobbies/interestedHobbies/' + userID
+          backend + '/hobbies/interestedHobbies/' + userID
         )
         console.log(response.data.hobbies)
         setSelectedHobbies(response.data.hobbies)
@@ -83,42 +85,11 @@ export default function AddHobbies() {
   }
 
   return (
+
       <div>
         <div style={{margin:"10px",textAlign:"center"}}>
          <h1>Hobbies</h1>
         </div>
-      {/*//   <ul>*/}
-      {/*//     {hobbies.map((h) => (*/}
-      {/*//         <li key={h._id}>*/}
-      {/*//           <div>*/}
-      {/*//             <h2>{h.hobbyName}</h2>*/}
-      {/*//             <button*/}
-      {/*//                 className="custom-button"*/}
-      {/*//                 onClick={() => selectHobby(h._id)}*/}
-      {/*//                 disabled={isAdded(h._id)}*/}
-      {/*//             >*/}
-      {/*//               Add*/}
-      {/*//             </button>*/}
-      {/*//             <button*/}
-      {/*//                 className="custom-button"*/}
-      {/*//                 onClick={() => removeHobby(h._id)}*/}
-      {/*//                 disabled={!isAdded(h._id)}*/}
-      {/*//             >*/}
-      {/*//               Delete*/}
-      {/*//             </button>*/}
-      {/*//             <br />*/}
-      {/*//             <br />*/}
-      {/*//           </div>*/}
-      {/*//           <div className="image-div">*/}
-      {/*//             <img src={h.image}/>*/}
-      {/*//           </div>*/}
-      {/*//           <div className="hobbyDescription">*/}
-      {/*//             <h4>Hobby Description : {h.hobbyDescription}</h4>*/}
-      {/*//           </div>*/}
-      {/*//         </li>*/}
-      {/*//     ))}*/}
-      {/*//   </ul>*/}
-      {/*// </div>*/}
         {hobbies.map((h)=>(
           <Card style={{ width: '18rem',margin:"1rem" }}>
             <Card.Img variant="top" src={h.image} />
@@ -154,5 +125,6 @@ export default function AddHobbies() {
         }
 
       </div>
+
   )
 }

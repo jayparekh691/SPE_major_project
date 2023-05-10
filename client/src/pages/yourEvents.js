@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useGetUserID } from '../hooks/useGetUserID'
 import axios from 'axios'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/navbar'
 import { BACKEND_URL } from '../config'
 import {Button, Card} from "react-bootstrap";
@@ -9,15 +9,16 @@ import {Button, Card} from "react-bootstrap";
 const backend = BACKEND_URL + '/api'
 
 export default function YourEvents() {
+  const navigate = useNavigate()
   const [events, setEvents] = useState([])
   const [selectedHobbies, setSelectedHobbies] = useState([])
   const userID = useGetUserID()
-
+  if (userID === null) navigate('/')
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const response = await axios.get(
-            backend + '/events/createdEvents/' + userID
+          backend + '/events/createdEvents/' + userID
         )
         console.log(response)
         setEvents(response.data)
@@ -39,47 +40,7 @@ export default function YourEvents() {
   }
 
   return (
-      // <div>
-      //   <div style={{margin:"10px",textAlign:"center"}}>
-      //   <h1>Your events</h1>
-      //   </div>
-      //   <ul>
-      //     {events.map((e) => (
-      //         <li key={e._id}>
-      //           <div>
-      //             <h3>{e.eventname}</h3>
-      //             <button className="custom-button" onClick={() => deleteEvent(e._id)}>Delete</button>
-      //             <br />
-      //             <br />
-      //           </div>
-      //           <div className="hobbyname">
-      //             <h5>Hobby Name : {e.hobbyname}</h5>
-      //           </div>
-      //           <div className="registrationDate">
-      //             <h5>Registration Date : {e.registrationDate}</h5>
-      //           </div>
-      //           <div className="location">
-      //             <h5>Location : {e.location}</h5>
-      //           </div>
-      //           <div className="district">
-      //             <h5>District : {e.district}</h5>
-      //           </div>
-      //           <div className="state">
-      //             <h5>State : {e.state}</h5>
-      //           </div>
-      //           <div className="eventDate">
-      //             <h5>Event Date : {e.eventDate}</h5>
-      //           </div>
-      //           <div className="minParticipation">
-      //             <h5>Min Participation required : {e.minParticipation}</h5>
-      //           </div>
-      //           <div className="currParticipation">
-      //             <h5>Current Participant Count : {e.participants.length}</h5>
-      //           </div>
-      //         </li>
-      //     ))}
-      //   </ul>
-      // </div>
+
       <div>
         <div style={{margin:"10px",textAlign:"center"}}>
           <h1>Your Events</h1>
@@ -108,5 +69,6 @@ export default function YourEvents() {
         ))
         }
       </div>
+
   )
 }

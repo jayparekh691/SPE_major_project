@@ -16,10 +16,15 @@ import Form from 'react-bootstrap/Form';
 const backend = BACKEND_URL + '/api'
 
 export default function CreateEvent() {
-  const userID = useGetUserID()
   const [cookies, _] = useCookies(['access_token'])
   const [hobbies, setHobbies] = useState([])
-  const [selectedRegistrationDate,setSelectedRegistrationDate] = useState(new Date())
+    const userID = useGetUserID()
+
+    const navigate = useNavigate()
+
+    const [selectedRegistrationDate, setSelectedRegistrationDate] = useState(
+    new Date()
+  )
   const [selectedEventDate, setSelectedEventDate] = useState(new Date())
   const [newevent, setNewEvent] = useState({
     eventname: '',
@@ -34,12 +39,15 @@ export default function CreateEvent() {
     userOwner: userID,
   })
 
-  const navigate = useNavigate()
   useEffect(() => {
+      if (userID === null) {
+          console.log(userID)
+          navigate('/')
+      }
     const GetHobbies = async () => {
       try {
         const response = await axios.get(
-            backend + '/events/createdEvents/hobbies/' + userID
+          backend + '/events/createdEvents/hobbies/' + userID
         )
         setHobbies(response.data.hobbies)
         // console.log(response.data.hobbies.length)
@@ -56,16 +64,20 @@ export default function CreateEvent() {
     // console.log(name, value)
   }
 
-  const handleChangeRegistrationDate = (date)=>{
+  const handleChangeRegistrationDate = (date) => {
     setSelectedRegistrationDate(date)
-    let formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-    newevent.registrationDate=formattedDate
+    let formattedDate = `${date.getDate()}/${
+      date.getMonth() + 1
+    }/${date.getFullYear()}`
+    newevent.registrationDate = formattedDate
   }
 
-  const handleChangeEventDate = (date)=>{
+  const handleChangeEventDate = (date) => {
     setSelectedEventDate(date)
-    let formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-    newevent.eventDate=formattedDate
+    let formattedDate = `${date.getDate()}/${
+      date.getMonth() + 1
+    }/${date.getFullYear()}`
+    newevent.eventDate = formattedDate
   }
 
   const handleSubmit = async (event) => {
@@ -74,11 +86,11 @@ export default function CreateEvent() {
       console.log(newevent)
     try {
       await axios.post(
-          backend + '/events',
-          { ...newevent },
-          {
-            headers: { authorization: cookies.access_token },
-          }
+        backend + '/events',
+        { ...newevent },
+        {
+          headers: { authorization: cookies.access_token },
+        }
       )
 
       alert('Event Created')
@@ -420,5 +432,6 @@ export default function CreateEvent() {
             </div>
         </div>
       </div>
+
   )
 }
