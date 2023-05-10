@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { HobbyModel } from '../models/Hobbies.js'
 import { UserModel } from '../models/Users.js'
+import multer from 'multer'
 
 const router = express.Router()
 
@@ -16,9 +17,10 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-  const event = new HobbyModel(req.body)
+  console.log(req.body)
+  const hobby = new HobbyModel(req.body)
   try {
-    const response = await event.save()
+    const response = await hobby.save()
     res.status(200)
     res.json(response)
   } catch (err) {

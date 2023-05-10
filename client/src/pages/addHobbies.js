@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useGetUserID } from '../hooks/useGetUserID'
+import Card from 'react-bootstrap/Card';
 import axios from 'axios'
 import { Navigate } from 'react-router-dom'
 import Navbar from '../components/navbar'
 import { BACKEND_URL } from '../config'
+import cricket from '../cricket.jpeg'
+import {Button, Col, Row} from "react-bootstrap";
 
 const backend = BACKEND_URL + '/api'
 
@@ -81,33 +84,75 @@ export default function AddHobbies() {
 
   return (
       <div>
-        <h1>Hobbies</h1>
-        <ul>
-          {hobbies.map((h) => (
-              <li key={h._id}>
-                <div>
-                  <h2>{h.hobbyName}</h2>
-                  <button
-                      onClick={() => selectHobby(h._id)}
-                      disabled={isAdded(h._id)}
-                  >
-                    Add
-                  </button>
-                  <button
-                      onClick={() => removeHobby(h._id)}
-                      disabled={!isAdded(h._id)}
-                  >
-                    Delete
-                  </button>
-                  <br />
-                  <br />
-                </div>
-                <div className="hobbyDescription">
-                  <h4>Hobby Description : {h.hobbyDescription}</h4>
-                </div>
-              </li>
-          ))}
-        </ul>
+        <div style={{margin:"10px",textAlign:"center"}}>
+         <h1>Hobbies</h1>
+        </div>
+      {/*//   <ul>*/}
+      {/*//     {hobbies.map((h) => (*/}
+      {/*//         <li key={h._id}>*/}
+      {/*//           <div>*/}
+      {/*//             <h2>{h.hobbyName}</h2>*/}
+      {/*//             <button*/}
+      {/*//                 className="custom-button"*/}
+      {/*//                 onClick={() => selectHobby(h._id)}*/}
+      {/*//                 disabled={isAdded(h._id)}*/}
+      {/*//             >*/}
+      {/*//               Add*/}
+      {/*//             </button>*/}
+      {/*//             <button*/}
+      {/*//                 className="custom-button"*/}
+      {/*//                 onClick={() => removeHobby(h._id)}*/}
+      {/*//                 disabled={!isAdded(h._id)}*/}
+      {/*//             >*/}
+      {/*//               Delete*/}
+      {/*//             </button>*/}
+      {/*//             <br />*/}
+      {/*//             <br />*/}
+      {/*//           </div>*/}
+      {/*//           <div className="image-div">*/}
+      {/*//             <img src={h.image}/>*/}
+      {/*//           </div>*/}
+      {/*//           <div className="hobbyDescription">*/}
+      {/*//             <h4>Hobby Description : {h.hobbyDescription}</h4>*/}
+      {/*//           </div>*/}
+      {/*//         </li>*/}
+      {/*//     ))}*/}
+      {/*//   </ul>*/}
+      {/*// </div>*/}
+        {hobbies.map((h)=>(
+          <Card style={{ width: '18rem',margin:"1rem" }}>
+            <Card.Img variant="top" src={h.image} />
+            <Card.Body>
+              <Card.Title>{h.hobbyName}</Card.Title>
+              <Card.Text>{h.hobbyDescription}</Card.Text>
+              <Row>
+                <Col>
+              <Button
+                  variant="outline-primary"
+              onClick={() => selectHobby(h._id)}
+              disabled={isAdded(h._id)}
+              >
+                Add
+              </Button>
+                </Col>
+                <Col>
+              <Button
+                  variant="outline-warning"
+                  onClick={() => removeHobby(h._id)}
+                  disabled={!isAdded(h._id)}
+              >
+                Delete
+              </Button>
+                </Col>
+              </Row>
+            </Card.Body>
+          </Card>
+        ))
+
+
+
+        }
+
       </div>
   )
 }

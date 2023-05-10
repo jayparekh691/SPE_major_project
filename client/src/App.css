@@ -150,7 +150,7 @@ input {
   border-radius: 10px;
 }
 
-button {
+.custom-button {
   background-color: white;
   padding: 10px;
   border-radius: 10px;
@@ -163,4 +163,15 @@ button {
   border: none;
   color: black;
   text-decoration: underline;
+}
+
+img{
+  /*object-fit:cover;*/
+  width:200px;
+  text-align: center;
+}
+
+.image-div{
+  display: flex;
+  justify-content: center;
 }

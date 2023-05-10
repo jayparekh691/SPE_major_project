@@ -8,6 +8,8 @@ import config from '../utils/config.js'
 import morgan from 'morgan'
 import fs from 'fs'
 import path from 'path'
+import multer from "multer"
+import bodyParser from "body-parser"
 
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
@@ -27,6 +29,9 @@ app.use(morgan('tiny', { stream: accessLogStream }))
 app.use('/api/auth', userRouter)
 app.use('/api/events', eventsRouter)
 app.use('/api/hobbies', hobbiesRouter)
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
+
 
 console.log(process.env.NODE_ENV)
 

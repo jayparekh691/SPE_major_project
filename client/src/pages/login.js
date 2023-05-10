@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { BACKEND_URL } from '../config'
+import {Button, Form} from "react-bootstrap";
 
 const backend = BACKEND_URL + '/api'
 
@@ -39,25 +40,27 @@ export default function Login() {
   return (
       <div className="auth-form-container">
         <h2>Login</h2>
-        <form className="login-form" onSubmit={handleSubmit}>
-          <label htmlFor="username">Username:</label>
-          <input
+        <Form onSubmit={handleSubmit}>
+          <Form.Label htmlFor="username">Username:</Form.Label>
+          <Form.Control
               required
               type="text"
               id="username"
               value={username}
               onChange={(event) => setUsername(event.target.value)}
           />
-          <label htmlFor="password">Password:</label>
-          <input
+          <Form.Label htmlFor="password">Password:</Form.Label>
+          <Form.Control
               required
               type="password"
               id="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
           />
-          <button type="submit">Log In</button>
-        </form>
+          <div style={{textAlign:"center",margin:"10px",padding:"5px"}}>
+          <Button type="submit" variant="outline-primary">Log In</Button>
+          </div>
+        </Form>
         <button className="link-btn" onClick={() => navigate('/register')}>Don't have an account? Register here.</button>
       </div>
   )

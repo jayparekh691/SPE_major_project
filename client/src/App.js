@@ -4,11 +4,12 @@ import Home from './pages/home'
 import Auth from './pages/auth'
 import ParticipatedEvents from './pages/participatedEvents'
 import CreateEvent from './pages/createEvent'
-import Navbar from './components/navbar'
+import NavBar from './components/navbar'
 import {useCookies} from "react-cookie";
 import AddHobbies from "./pages/addHobbies";
 import YourEvents from "./pages/yourEvents";
 import Register from "./pages/register";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [cookies, setCookies] = useCookies(['access_token'])
@@ -18,7 +19,7 @@ function App() {
         <Router>
           {
               cookies.access_token &&
-              <Navbar />
+              <NavBar />
           }
 
           <Routes>
