@@ -11,17 +11,32 @@ router.get('/:userID', async (req, res) => {
     const id = await UserModel.findById(req.params.userID)
     const dist = id.district
     const hobbies = id.hobbies
-    const response = await EventModel.find({ district: dist })
+
+    let response = await EventModel.find({ district: dist })
+    response = response.map((e, i) => {
+      console.log(e)
+      let d = e._doc
+      d.image = 'image'
+      return d
+    })
+    // console.log(response)
     let result = []
     for (let index = 0; index < response.length; index++) {
       for (let index1 = 0; index1 < hobbies.length; index1++) {
         let hobby = await HobbyModel.findById(hobbies[index1])
         if (response[index].hobbyname === hobby.hobbyName) {
+          // console.log(hobby.image)
+          response[index].image = hobby.image
+          // console.log(response[index].image)
           result.push(response[index])
           break
         }
       }
     }
+    // console.log(result)
+    // result.forEach((e) => {
+    //   console.log(e.image)
+    // })
     res.json(result)
   } catch (err) {
     console.log(err.message)
@@ -102,11 +117,46 @@ router.get('/participatedEvents/ids/:userID', async (req, res) => {
 
 router.get('/participatedEvents/:userID', async (req, res) => {
   try {
+    const id = await UserModel.findById(req.params.userID)
+    const hobbies = id.hobbies
     const user = await UserModel.findById(req.params.userID)
     const participatedEvents = await EventModel.find({
       _id: { $in: user.participatedEvents },
     })
-    res.json({ participatedEvents: participatedEvents })
+    // console.log(user.participatedEvents)
+    let response = []
+    for (const ob of user.participatedEvents) {
+      let ans = await EventModel.findById(ob)
+      // console.log(ans)
+      response.push(ans)
+      // console.log(response)
+    }
+    // console.log(response)
+    response = response.map((e, i) => {
+      console.log(e)
+      let d = e._doc
+      d.image = 'image'
+      return d
+    })
+    // console.log(response)
+    // console.log(response.length)
+    let result = []
+    for (let index = 0; index < response.length; index++) {
+      for (let index1 = 0; index1 < hobbies.length; index1++) {
+        let hobby = await HobbyModel.findById(hobbies[index1])
+        if (response[index].hobbyname === hobby.hobbyName) {
+          // console.log(hobby.image)
+          response[index].image = hobby.image
+          // console.log(response[index].image)
+          result.push(response[index])
+          break
+        }
+      }
+    }
+    console.log('Result')
+    // console.log(result)
+    console.log(participatedEvents)
+    res.json({ participatedEvents: result })
   } catch (err) {
     console.log(err.message)
     res.json(err)
@@ -143,8 +193,33 @@ router.put('/participatedEvents/remove/:userID/:eventID', async (req, res) => {
 
 router.get('/createdEvents/:userID', async (req, res) => {
   try {
-    const events = await EventModel.find({ userOwner: req.params.userID })
-    res.json(events)
+    const id = await UserModel.findById(req.params.userID)
+    const dist = id.district
+    const hobbies = id.hobbies
+    let response = await EventModel.find({ userOwner: req.params.userID })
+    response = response.map((e, i) => {
+      console.log(e)
+      let d = e._doc
+      d.image = 'image'
+      return d
+    })
+    // console.log(response)
+    // console.log(response.length)
+    let result = []
+    for (let index = 0; index < response.length; index++) {
+      for (let index1 = 0; index1 < hobbies.length; index1++) {
+        let hobby = await HobbyModel.findById(hobbies[index1])
+        if (response[index].hobbyname === hobby.hobbyName) {
+          // console.log(hobby.image)
+          response[index].image = hobby.image
+          // console.log(response[index].image)
+          result.push(response[index])
+          break
+        }
+      }
+    }
+    console.log(result)
+    res.json(response)
   } catch (err) {
     res.status(400)
     res.json(err.message)
@@ -154,6 +229,7 @@ router.get('/createdEvents/:userID', async (req, res) => {
 router.get('/createdEvents/hobbies/:userID', async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.userID)
+    console.log(user)
     const userHobbies = []
     console.log(user.hobbies)
     for (let index = 0; index < user.hobbies.length; index++) {

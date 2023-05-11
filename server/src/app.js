@@ -8,30 +8,65 @@ import config from '../utils/config.js'
 import morgan from 'morgan'
 import fs from 'fs'
 import path from 'path'
-import multer from "multer"
-import bodyParser from "body-parser"
+import multer from 'multer'
+import bodyParser from 'body-parser'
+import winston from 'winston'
+import { ElasticsearchTransport } from 'winston-elasticsearch'
 
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+// const __filename = fileURLToPath(import.meta.url)
+// const __dirname = dirname(__filename)
 
 const app = express()
 app.use(express.json())
 app.use(cors())
 
-const accessLogStream = fs.createWriteStream(
-  path.join(__dirname, './logs/access.log'),
-  { flags: 'a' }
-)
-app.use(morgan('tiny', { stream: accessLogStream }))
+const logger = winston.createLogger({
+  level: 'info',
+  transports: [
+    new ElasticsearchTransport({
+      level: 'info',
+      index: 'logs',
+      clientOpts: {
+        node: 'http://localhost:9200/',
+      },
+    }),
+  ],
+})
+
+app.use((req, res, next) => {
+  logger.info({
+    message: 'API request',
+    method: req.method,
+    path: req.path,
+    query: req.query,
+    body: req.body,
+  })
+
+  res.on('finish', () => {
+    logger.info({
+      message: 'API response',
+      method: req.method,
+      path: req.path,
+      status: res.statusCode,
+    })
+  })
+
+  next()
+})
+
+// const accessLogStream = fs.createWriteStream(
+//   path.join(__dirname, './logs/access.log'),
+//   { flags: 'a' }
+// )
+// app.use(morgan('tiny', { stream: accessLogStream }))
 app.use('/api/auth', userRouter)
 app.use('/api/events', eventsRouter)
 app.use('/api/hobbies', hobbiesRouter)
-app.use(bodyParser.urlencoded());
-app.use(bodyParser.json());
-
+app.use(bodyParser.urlencoded())
+app.use(bodyParser.json())
 
 console.log(process.env.NODE_ENV)
 
