@@ -1,0 +1,73 @@
+pipeline {
+    // Declare variables that will be used by the later stages
+    environment {
+        DOCKERHUB_REGISTRY = "jayparekhiiitb/spe_major_project"
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-id')
+    }
+    agent any 
+    stages {
+        
+        stage('Git Pull') {
+            steps {
+                // credentials are required because its a private repository
+                git url: 'https://github.com/jayparekh691/SPE_major_project.git'
+            }
+        }
+        stage ('Running API Tests (Supertest)') {
+				steps {
+					sh '''
+							cd server
+							npm ci
+							npm run test
+					'''
+				}
+			}
+        stage('Build Hobbyist Frontend Docker Image') {
+			steps {
+			    sh "docker build -t $DOCKERHUB_REGISTRY-client:latest client/"
+			  }   
+		}
+		
+        stage('Build Hobbyist Backemd Docker Image') {
+			steps {
+			    sh "docker build -t $DOCKERHUB_REGISTRY-server:latest server/"
+			  }   
+		}
+		stage('Login to Docker Hub') {
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+		stage('Push Frontend Docker Image to Docker Hub') {
+				steps {
+					sh "docker push $DOCKERHUB_REGISTRY-client:latest"
+				}
+			}
+			
+		stage('Push Backend Docker Image to Docker Hub') {
+				steps {
+					sh "docker push $DOCKERHUB_REGISTRY-server:latest"
+				}
+			}
+		 stage('Removing Docker Server Image from Local') {
+            steps {
+                sh "docker rmi $DOCKERHUB_REGISTRY-server:latest"
+            }
+        }
+        stage('Removing Docker Client Image from Local') {
+            steps {
+                sh "docker rmi $DOCKERHUB_REGISTRY-client:latest"
+            }
+        }
+		 stage('Ansible Deploy') {
+            steps {
+                ansiblePlaybook becomeUser: 'null',
+                colorized: true,
+                installation: 'Ansible',
+                inventory: 'inventory',
+                playbook: 'ansible-playbook.yml',
+                sudoUser: 'null'
+            }
+        }
+    }
+}
