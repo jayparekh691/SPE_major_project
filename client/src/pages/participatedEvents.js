@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useGetUserID } from '../hooks/useGetUserID'
 import axios from 'axios'
 import { BACKEND_URL } from '../config'
-import { Button, Card } from 'react-bootstrap'
+import {Button, Card, Container, Row} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 
 const backend = BACKEND_URL + '/api'
@@ -46,12 +46,15 @@ export default function ParticipatedEvents() {
         <h1>Participated Events</h1>
       </div>
 
+      <Container style={{textAlign:"center"}}>
+        <Row lg={2}>
+
       {participatedEvents !== undefined &&
         participatedEvents.map((e) => (
-          <Card style={{ width: '70rem', margin: '1rem' }}>
+          <Card style={{ width: '25rem', margin: '10px' }}>
             <Card.Body>
-              <Card.Title>{e.eventname}</Card.Title>
               <Card.Img variant="top" src={e.image} />
+              <Card.Title>{e.eventname}</Card.Title>
               <Card.Text>Description : {e.description}</Card.Text>
               <Card.Subtitle className="mb-2 text-muted">
                 Hobby name : {e.hobbyname}
@@ -84,6 +87,8 @@ export default function ParticipatedEvents() {
             </Card.Body>
           </Card>
         ))}
+        </Row>
+      </Container>
     </div>
   )
 }

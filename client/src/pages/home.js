@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/navbar'
 import { BACKEND_URL } from '../config'
-import { Button, Card } from 'react-bootstrap'
+import {Button, Card, Container, ListGroup, Row} from 'react-bootstrap'
 
 const backend = BACKEND_URL + '/api'
 
@@ -62,12 +62,16 @@ export default function Home() {
         <h1>New Events</h1>
       </div>
 
-      {events.length != undefined &&
+      <Container fluid style={{textAlign:"center"}}>
+        <Row lg={2}>
+
+      {events.length !== undefined &&
         events.map((e) => (
-          <Card style={{ width: '80rem', margin: '10rem' }}>
+
+            <Card style={{ width: '25rem', margin:'10px'}}>
             <Card.Body>
-              <Card.Title>{e.eventname}</Card.Title>
               <Card.Img variant="top" src={e.image} />
+              <Card.Title>{e.eventname}</Card.Title>
               <Card.Text>Description : {e.description}</Card.Text>
               <Card.Subtitle className="mb-2 text-muted">
                 Hobby name : {e.hobbyname}
@@ -103,7 +107,11 @@ export default function Home() {
               </Button>
             </Card.Body>
           </Card>
-        ))}
+
+        ))
+      }
+        </Row>
+      </Container>
     </div>
   )
 }

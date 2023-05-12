@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/navbar'
 import { BACKEND_URL } from '../config'
 import cricket from '../cricket.jpeg'
-import { Button, Col, Row } from 'react-bootstrap'
+import {Button, Col, Container, Row} from 'react-bootstrap'
 
 const backend = BACKEND_URL + '/api'
 
@@ -89,10 +89,12 @@ export default function AddHobbies() {
       <div style={{ margin: '10px', textAlign: 'center' }}>
         <h1>Hobbies</h1>
       </div>
+      <Container fluid style={{textAlign:"center"}}>
+        <Row lg={2}>
       {hobbies.map((h) => (
-        <Card style={{ width: '40rem', margin: '1rem' }}>
-          <Card.Img variant="top" src={h.image} />
+        <Card style={{ width: '25rem', margin: '10px' }}>
           <Card.Body>
+            <Card.Img variant="top" src={h.image} />
             <Card.Title>{h.hobbyName}</Card.Title>
             <Card.Text>{h.hobbyDescription}</Card.Text>
             <Row>
@@ -118,6 +120,8 @@ export default function AddHobbies() {
           </Card.Body>
         </Card>
       ))}
+        </Row>
+      </Container>
     </div>
   )
 }

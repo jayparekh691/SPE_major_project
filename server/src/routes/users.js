@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
     gender,
     mobilenumber,
   } = req.body
-  console.log('In register server')
+  // console.log('In register server')
   const user = await UserModel.findOne({ username })
 
   if (user) {
@@ -45,7 +45,7 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-  console.log('In login server')
+  // console.log('In login server')
   const { username, password } = req.body
   const user = await UserModel.findOne({ username })
   // console.log(user)
