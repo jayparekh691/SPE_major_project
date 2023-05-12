@@ -19,24 +19,24 @@ export default function NavBar() {
       <Navbar collapseOnSelect expand="lg" bg="dark" variant={"dark"}>
           <Navbar.Toggle aria-controls="navbarScroll"/>
           <Navbar.Collapse id="navbarScroll">
-              <Nav
-                  className="mr-auto my-2 my-lg-0"
-                  // style={{ maxHeight: '100px' }}
-                  // navbarScroll
-              >
+              <Nav>
                   <Nav.Link eventKey="1" as={Link} to="/home">Home</Nav.Link>
                   <Nav.Link eventKey="2" as={Link} to="/addHobbies">Add hobbies</Nav.Link>
                   <Nav.Link eventKey="3" as={Link} to="/createEvent">Create Event</Nav.Link>
                   <Nav.Link eventKey="4" as={Link} to="/yourEvents">Your Events</Nav.Link>
                   <Nav.Link eventKey="5" as={Link} to="/participatedEvents">Participated Events</Nav.Link>
               </Nav>
+
           </Navbar.Collapse>
-              <Button
-                  onClick={logout}
-                  variant="outline-danger"
-              >
-                  Logout
-              </Button>
+
+          <Button
+              onClick={logout}
+              variant="outline-danger"
+          >
+              Logout
+          </Button>
+
+
 
       </Navbar>
 
