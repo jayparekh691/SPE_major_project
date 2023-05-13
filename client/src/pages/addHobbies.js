@@ -13,12 +13,17 @@ const backend = BACKEND_URL + '/api'
 export default function AddHobbies() {
   const [hobbies, setHobbies] = useState([])
   const [selectedHobbies, setSelectedHobbies] = useState([])
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const userID = useGetUserID()
 
   const navigate = useNavigate()
   if (userID === null) navigate('/')
+
+
   useEffect(() => {
+    setTimeout(()=>{
+      setIsLoading(false)
+    },3*1000)
     const fetchHobbies = async () => {
       try {
         const response = await axios.get(backend + '/hobbies')
@@ -52,7 +57,7 @@ export default function AddHobbies() {
         hobbyID,
         userID,
       })
-      // alert('Hobby added')
+      alert('Hobby added')
       // setSelectedHobbies(response.data.hobbies)
       console.log(response.data.hobbies)
       setIsLoading(false)
@@ -67,7 +72,7 @@ export default function AddHobbies() {
     try {
       const url = backend + '/hobbies/' + hobbyID + '/user/' + userID
       const response = await axios.put(url)
-      // alert('Hobby removed')
+      alert('Hobby removed')
       // setSelectedHobbies(response.data.hobbies)
       console.log(response.data.hobbies)
       setIsLoading(false)
@@ -80,7 +85,7 @@ export default function AddHobbies() {
   var key = '_id'
   const isAdded = (id) => {
     let present = false
-    if (selectedHobbies != null) {
+    if (selectedHobbies !== null) {
       selectedHobbies.forEach((element) => {
         if (element[key] === id) present = true
       })
