@@ -11,9 +11,9 @@ import path from 'path'
 import multer from 'multer'
 import bodyParser from 'body-parser'
 import winston from 'winston'
-import { ElasticsearchTransport } from 'winston-elasticsearch'
-// import pkg from 'winston-elasticsearch'
-// const {ElasticsearchTransport} =pkg
+// import { ElasticsearchTransport } from 'winston-elasticsearch'
+import pkg from 'winston-elasticsearch'
+const {ElasticsearchTransport} =pkg
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 
