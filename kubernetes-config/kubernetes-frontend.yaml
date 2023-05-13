@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: socialconnect-frontend
-          image: jayparekhiiitb/spe_major_project-client
+          image: jayantmukundam/spe_major_project-client
           # resources:
           #   limits:
           #     memory: "128Mi"

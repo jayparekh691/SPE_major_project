@@ -1,2 +1,2 @@
 [demoArc]
-client1 ansible_host=172.16.138.223 ansible_connection=ssh ansible_user=jay ansible_sudo_pass=rock123@A
+client1 ansible_host=172.16.129.93 ansible_connection=ssh ansible_user=jayant ansible_sudo_pass=jayant@2811
