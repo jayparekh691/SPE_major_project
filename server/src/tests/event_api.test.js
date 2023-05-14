@@ -13,8 +13,6 @@ beforeAll(async () => {
 
   await UserModel.deleteMany({})
   await UserModel.insertMany(initializeUsers)
-  // await HobbyModel.deleteMany({})
-  // await HobbyModel.insertMany(initializeHobbies)
   await EventModel.deleteMany({})
   await EventModel.insertMany(initializeEvents)
 })

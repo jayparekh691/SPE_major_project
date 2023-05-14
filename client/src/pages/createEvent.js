@@ -12,6 +12,8 @@ import { useCookies } from 'react-cookie'
 import { BACKEND_URL } from '../config'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import Spinner from "react-bootstrap/Spinner";
+import Loader from "../components/Loader";
 
 const backend = BACKEND_URL + '/api'
 
@@ -22,10 +24,9 @@ export default function CreateEvent() {
 
   const navigate = useNavigate()
 
-  const [selectedRegistrationDate, setSelectedRegistrationDate] = useState(
-    new Date()
-  )
+  const [selectedRegistrationDate, setSelectedRegistrationDate] = useState(new Date())
   const [selectedEventDate, setSelectedEventDate] = useState(new Date())
+  const [isLoading, setIsLoading] = useState(true)
   const [newevent, setNewEvent] = useState({
     eventname: '',
     hobbyname: '',
@@ -44,6 +45,9 @@ export default function CreateEvent() {
       console.log(userID)
       navigate('/')
     }
+    setTimeout(()=>{
+      setIsLoading(false)
+    },1*1000)
     const GetHobbies = async () => {
       try {
         const response = await axios.get(
@@ -65,6 +69,8 @@ export default function CreateEvent() {
   }
 
   const handleChangeRegistrationDate = (date) => {
+    if(date==null)
+      return;
     setSelectedRegistrationDate(date)
     let formattedDate = `${date.getDate()}/${
       date.getMonth() + 1
@@ -73,6 +79,8 @@ export default function CreateEvent() {
   }
 
   const handleChangeEventDate = (date) => {
+    if(date==null)
+      return;
     setSelectedEventDate(date)
     let formattedDate = `${date.getDate()}/${
       date.getMonth() + 1
@@ -1005,174 +1013,186 @@ export default function CreateEvent() {
       <div style={{ margin: '10px', textAlign: 'center' }}>
         <h1>Create event</h1>
       </div>
-      <div className="auth-form-container">
-        <Form>
-          <Row>
-            <Col>
-              <Form.Label htmlFor="eventname">Event Name</Form.Label>
+      {
+          isLoading &&
+          <Loader/>
+      }
+      {
+          !isLoading &&
 
-              <Form.Control
-                type="text"
-                id="eventname"
-                name="eventname"
-                value={newevent.eventname}
-                onChange={handleChange}
-                required
-              />
-            </Col>
-            <Col>
-              <Form.Label htmlFor="hobbyname">Hobby Name</Form.Label>
-              <Form.Select
-                type="text"
-                id="hobbyname"
-                name="hobbyname"
-                value={newevent.hobbyname}
-                onChange={handleChange}
-                required
-              >
-                <option>Select Hobby</option>
-                {hobbies?.map((hobby) => {
-                  return <option>{hobby}</option>
-                })}
-              </Form.Select>
-            </Col>
-          </Row>
+          <div className="auth-form-container">
+            <Form onSubmit={handleSubmit}>
+              <Row>
+                <Col>
+                  <Form.Label htmlFor="eventname">Event Name</Form.Label>
 
-          <Row>
-            <Form.Label htmlFor="description">Description</Form.Label>
-            <Form.Control
-              as="textarea"
-              id="description"
-              name="description"
-              value={newevent.description}
-              onChange={handleChange}
-              required
-            />
-          </Row>
-          <Row>
-            <Col>
-              <Form.Label htmlFor="location">Location</Form.Label>
-              <Form.Control
-                type="text"
-                id="location"
-                name="location"
-                value={newevent.location}
-                onChange={handleChange}
-                required
-              />
-            </Col>
-            <Col>
-              <Form.Label htmlFor="state">State</Form.Label>
-              <Form.Select
-                class="form-control"
-                id="inputState"
-                name="state"
-                value={newevent.state}
-                onChange={handleChange}
-              >
-                <option value="SelectState">Select State</option>
-                <option value="Andra Pradesh">Andra Pradesh</option>
-                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                <option value="Assam">Assam</option>
-                <option value="Bihar">Bihar</option>
-                <option value="Chhattisgarh">Chhattisgarh</option>
-                <option value="Goa">Goa</option>
-                <option value="Gujarat">Gujarat</option>
-                <option value="Haryana">Haryana</option>
-                <option value="Himachal Pradesh">Himachal Pradesh</option>
-                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                <option value="Jharkhand">Jharkhand</option>
-                <option value="Karnataka">Karnataka</option>
-                <option value="Kerala">Kerala</option>
-                <option value="Madya Pradesh">Madya Pradesh</option>
-                <option value="Maharashtra">Maharashtra</option>
-                <option value="Manipur">Manipur</option>
-                <option value="Meghalaya">Meghalaya</option>
-                <option value="Mizoram">Mizoram</option>
-                <option value="Nagaland">Nagaland</option>
-                <option value="Odisha">Odisha</option>
-                <option value="Punjab">Punjab</option>
-                <option value="Rajasthan">Rajasthan</option>
-                <option value="Sikkim">Sikkim</option>
-                <option value="Tamil Nadu">Tamil Nadu</option>
-                <option value="Telangana">Telangana</option>
-                <option value="Tripura">Tripura</option>
-                <option value="Uttarakhand">Uttarakhand</option>
-                <option value="Uttar Pradesh">Uttar Pradesh</option>
-                <option value="West Bengal">West Bengal</option>
-                <option disabled={true}>UNION Territories</option>
-                <option value="Andaman and Nicobar Islands">
-                  Andaman and Nicobar Islands
-                </option>
-                <option value="Chandigarh">Chandigarh</option>
-                <option value="Dadar and Nagar Haveli">
-                  Dadar and Nagar Haveli
-                </option>
-                <option value="Daman and Diu">Daman and Diu</option>
-                <option value="Delhi">Delhi</option>
-                <option value="Lakshadweep">Lakshadweep</option>
-                <option value="Pondicherry">Pondicherry</option>
-              </Form.Select>
-            </Col>
+                  <Form.Control
+                      required
+                      type="text"
+                      id="eventname"
+                      name="eventname"
+                      value={newevent.eventname}
+                      onChange={handleChange}
 
-            <Col>
-              <Form.Label htmlFor="district">District</Form.Label>
-              <Form.Select
-                class="form-control"
-                id="inputDistrict"
-                name="district"
-                value={newevent.district}
-                onChange={handleChange}
-              >
-                <option value="">-- select one -- </option>
-              </Form.Select>
-            </Col>
-          </Row>
+                  />
+                </Col>
+                <Col>
+                  <Form.Label htmlFor="hobbyname">Hobby Name</Form.Label>
+                  <Form.Select
+                      type="text"
+                      id="hobbyname"
+                      name="hobbyname"
+                      value={newevent.hobbyname}
+                      onChange={handleChange}
+                      required
+                  >
+                    <option>Select Hobby</option>
+                    {hobbies?.map((hobby) => {
+                      return <option>{hobby}</option>
+                    })}
+                  </Form.Select>
+                </Col>
+              </Row>
 
-          <Row>
-            <Col>
-              <Form.Label htmlFor="registrationDate">
-                Registration Date Deadline
-              </Form.Label>
-              <Col>
-                <DatePicker
-                  value={selectedRegistrationDate}
-                  onChange={handleChangeRegistrationDate}
+              <Row>
+                <Form.Label htmlFor="description">Description</Form.Label>
+                <Form.Control
+                    as="textarea"
+                    id="description"
+                    name="description"
+                    value={newevent.description}
+                    onChange={handleChange}
+                    required
                 />
-              </Col>
-            </Col>
-            <Col>
-              <Form.Label htmlFor="eventDate">Event Date</Form.Label>
-              <Col>
-                <DatePicker
-                  value={selectedEventDate}
-                  onChange={handleChangeEventDate}
-                />
-              </Col>
-            </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Form.Label htmlFor="location">Location</Form.Label>
+                  <Form.Control
+                      type="text"
+                      id="location"
+                      name="location"
+                      value={newevent.location}
+                      onChange={handleChange}
+                      required
+                  />
+                </Col>
+                <Col>
+                  <Form.Label htmlFor="state">State</Form.Label>
+                  <Form.Select
+                      class="form-control"
+                      id="inputState"
+                      name="state"
+                      value={newevent.state}
+                      onChange={handleChange}
+                  >
+                    <option value="SelectState">Select State</option>
+                    <option value="Andra Pradesh">Andra Pradesh</option>
+                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                    <option value="Assam">Assam</option>
+                    <option value="Bihar">Bihar</option>
+                    <option value="Chhattisgarh">Chhattisgarh</option>
+                    <option value="Goa">Goa</option>
+                    <option value="Gujarat">Gujarat</option>
+                    <option value="Haryana">Haryana</option>
+                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                    <option value="Jharkhand">Jharkhand</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Madya Pradesh">Madya Pradesh</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Manipur">Manipur</option>
+                    <option value="Meghalaya">Meghalaya</option>
+                    <option value="Mizoram">Mizoram</option>
+                    <option value="Nagaland">Nagaland</option>
+                    <option value="Odisha">Odisha</option>
+                    <option value="Punjab">Punjab</option>
+                    <option value="Rajasthan">Rajasthan</option>
+                    <option value="Sikkim">Sikkim</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Tripura">Tripura</option>
+                    <option value="Uttarakhand">Uttarakhand</option>
+                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    <option value="West Bengal">West Bengal</option>
+                    <option disabled={true}>UNION Territories</option>
+                    <option value="Andaman and Nicobar Islands">
+                      Andaman and Nicobar Islands
+                    </option>
+                    <option value="Chandigarh">Chandigarh</option>
+                    <option value="Dadar and Nagar Haveli">
+                      Dadar and Nagar Haveli
+                    </option>
+                    <option value="Daman and Diu">Daman and Diu</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Lakshadweep">Lakshadweep</option>
+                    <option value="Pondicherry">Pondicherry</option>
+                  </Form.Select>
+                </Col>
 
-            <Col>
-              <Form.Label htmlFor="minParticipation">
-                Minimum Participation:
-              </Form.Label>
-              <Form.Control
-                type="number"
-                id="minParticipation"
-                name="minParticipation"
-                value={newevent.minParticipation}
-                onChange={handleChange}
-                required
-              />
-            </Col>
-          </Row>
-        </Form>
+                <Col>
+                  <Form.Label htmlFor="district">District</Form.Label>
+                  <Form.Select
+                      class="form-control"
+                      id="inputDistrict"
+                      name="district"
+                      value={newevent.district}
+                      onChange={handleChange}
+                  >
+                    <option value="">-- select one --</option>
+                  </Form.Select>
+                </Col>
+              </Row>
 
-        <div style={{ textAlign: 'center', margin: '10px', padding: '5px' }}>
-          <Button onClick={handleSubmit} variant="outline-success">
-            Create event
-          </Button>
-        </div>
-      </div>
+              <Row>
+                <Col>
+                  <Form.Label htmlFor="registrationDate">
+                    Registration Date Deadline
+                  </Form.Label>
+                  <Col>
+                    <DatePicker
+                        value={selectedRegistrationDate}
+                        onChange={handleChangeRegistrationDate}
+                        minDate={new Date()}
+                    />
+                  </Col>
+                </Col>
+                <Col>
+                  <Form.Label htmlFor="eventDate">Event Date</Form.Label>
+                  <Col>
+                    <DatePicker
+                        value={selectedEventDate}
+                        onChange={handleChangeEventDate}
+                        minDate={selectedRegistrationDate}
+                    />
+                  </Col>
+                </Col>
+
+                <Col>
+                  <Form.Label htmlFor="minParticipation">
+                    Minimum Participation:
+                  </Form.Label>
+                  <Form.Control
+                      type="number"
+                      id="minParticipation"
+                      name="minParticipation"
+                      value={newevent.minParticipation}
+                      onChange={handleChange}
+                      required
+                  />
+                </Col>
+              </Row>
+              <div style={{textAlign: 'center', margin: '10px', padding: '5px'}}>
+                <Button type="submit" variant="outline-success">
+                  Create event
+                </Button>
+              </div>
+            </Form>
+
+
+          </div>
+      }
     </div>
   )
 }

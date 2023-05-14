@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: socialconnect-backend
-          image: jayparekhiiitb/spe_major_project-server
+          image: jayantmukundam/spe_major_project-server
           resources:
             limits:
               memory: '128Mi'
