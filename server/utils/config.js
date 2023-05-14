@@ -22,14 +22,14 @@ let env = null
 NEW CONFIG FOR K8s DEPLOYMENT
 */
 env = process.env
-
+let process_env = process.env.NODE_ENV
 // const PORT = 3001
 // const MONGODB_URI =
 //   'mongodb+srv://jayparekh:rock123A@production.074bxra.mongodb.net/?retryWrites=true&w=majority'
 // const SECRET = env.SECRET
 let MONGODB_URI
 const PORT = env.PORT
-if(env=="production") {
+if(process_env=="production") {
     MONGODB_URI = env.MONGODB_URI_PRODUCTION
 }
 else{
