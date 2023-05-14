@@ -27,10 +27,12 @@ env = process.env
 // const MONGODB_URI =
 //   'mongodb+srv://jayparekh:rock123A@production.074bxra.mongodb.net/?retryWrites=true&w=majority'
 // const SECRET = env.SECRET
-
-// env = process.env
-//
+let MONGODB_URI
 const PORT = env.PORT
-const MONGODB_URI = env.MONGODB_URI
-
+if(env=="production") {
+    MONGODB_URI = env.MONGODB_URI_PRODUCTION
+}
+else{
+    MONGODB_URI = env.MONGODB_URI_TESTING
+}
 export default { PORT, MONGODB_URI }

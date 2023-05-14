@@ -71,17 +71,17 @@ app.use(bodyParser.json())
 
 console.log(process.env.NODE_ENV)
 
-if (process.env.NODE_ENV === 'testing') {
-  mongoose.connect(
-    'mongodb+srv://jayparekh:rock123A@cluster0.awazspn.mongodb.net/Cluster0?retryWrites=true&w=majority'
-  )
-}
+// if (process.env.NODE_ENV === 'testing') {
+//   mongoose.connect(
+//     'mongodb+srv://jayparekh:rock123A@cluster0.awazspn.mongodb.net/Cluster0?retryWrites=true&w=majority'
+//   )
+// }
 // else {
 //   mongoose.connect(
 //     'mongodb+srv://jayparekh:rock123A@production.074bxra.mongodb.net/?retryWrites=true&w=majority'
 //   )
 // }
-else {
+{
   mongoose
     .connect(config.MONGODB_URI)
     .then(() => {
