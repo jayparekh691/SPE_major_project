@@ -29,10 +29,10 @@ let process_env = process.env.NODE_ENV
 // const SECRET = env.SECRET
 let MONGODB_URI
 const PORT = env.PORT
-if(process_env=="production") {
-    MONGODB_URI = env.MONGODB_URI_PRODUCTION
+if(process_env=="testing") {
+    MONGODB_URI = env.MONGODB_URI_TESTING
 }
 else{
-    MONGODB_URI = env.MONGODB_URI_TESTING
+    MONGODB_URI = env.MONGODB_URI_PRODUCTION
 }
 export default { PORT, MONGODB_URI }
