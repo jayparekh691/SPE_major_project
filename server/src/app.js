@@ -5,6 +5,7 @@ import { userRouter } from './routes/users.js'
 import { eventsRouter } from './routes/events.js'
 import { hobbiesRouter } from './routes/hobbies.js'
 import config from '../utils/config.js'
+import yenv from "yenv";
 import morgan from 'morgan'
 import fs from 'fs'
 import path from 'path'
@@ -72,9 +73,19 @@ app.use(bodyParser.json())
 console.log(process.env.NODE_ENV)
 
 if (process.env.NODE_ENV === 'testing') {
-  mongoose.connect(
-    'mongodb+srv://jayparekh:rock123A@cluster0.awazspn.mongodb.net/Cluster0?retryWrites=true&w=majority'
-  )
+  let env = yenv('env-local.yaml')
+  let PORT = env.PORT
+  let MONGODB_URI = env.MONGODB_URI
+  mongoose
+      .connect(MONGODB_URI)
+      .then(() => {
+        console.log(MONGODB_URI)
+        console.log(PORT)
+      })
+      .catch((error) => {
+        console.log(error.message)
+        // logger.error(`Failed to connect to MongoDB: ${error.message}`)
+      })
 }
 // else {
 //   mongoose.connect(

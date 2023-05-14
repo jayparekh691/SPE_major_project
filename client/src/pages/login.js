@@ -13,8 +13,8 @@ export const validateInput = (str = '') => str.includes('@')
 
 export default function Login() {
   // console.log(backend)
-  window.history.forward()
-  window.onunload = async function () {
+  // window.history.forward()
+  // window.onunload = async function () {
     return
   }
   const [_, setCookies] = useCookies(['access_token'])
