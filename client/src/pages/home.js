@@ -6,6 +6,7 @@ import Navbar from '../components/navbar'
 import { BACKEND_URL } from '../config'
 import {Button, Card, Container, ListGroup, Row} from 'react-bootstrap'
 import Spinner from 'react-bootstrap/Spinner';
+import Loader from "../components/Loader";
 
 const backend = BACKEND_URL + '/api'
 
@@ -52,7 +53,7 @@ export default function Home() {
         eventID,
         userID,
       })
-      alert('Participated')
+      // alert('Participated')
       setParticipatedEvents(response.data.participatedEvents)
       setIsLoading(false)
     } catch (err) {
@@ -70,9 +71,7 @@ export default function Home() {
 
       {
           isLoading &&
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          <Loader/>
       }
 
       {

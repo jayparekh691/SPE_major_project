@@ -26,18 +26,13 @@ export default function NavBar() {
                   <Nav.Link eventKey="4" as={Link} to="/yourEvents">Your Events</Nav.Link>
                   <Nav.Link eventKey="5" as={Link} to="/participatedEvents">Participated Events</Nav.Link>
               </Nav>
-
           </Navbar.Collapse>
-
           <Button
               onClick={logout}
               variant="outline-danger"
           >
               Logout
           </Button>
-
-
-
       </Navbar>
 
   )

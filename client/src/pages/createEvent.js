@@ -13,6 +13,7 @@ import { BACKEND_URL } from '../config'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Spinner from "react-bootstrap/Spinner";
+import Loader from "../components/Loader";
 
 const backend = BACKEND_URL + '/api'
 
@@ -68,6 +69,8 @@ export default function CreateEvent() {
   }
 
   const handleChangeRegistrationDate = (date) => {
+    if(date==null)
+      return;
     setSelectedRegistrationDate(date)
     let formattedDate = `${date.getDate()}/${
       date.getMonth() + 1
@@ -76,6 +79,8 @@ export default function CreateEvent() {
   }
 
   const handleChangeEventDate = (date) => {
+    if(date==null)
+      return;
     setSelectedEventDate(date)
     let formattedDate = `${date.getDate()}/${
       date.getMonth() + 1
@@ -1010,26 +1015,25 @@ export default function CreateEvent() {
       </div>
       {
           isLoading &&
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          <Loader/>
       }
       {
           !isLoading &&
 
           <div className="auth-form-container">
-            <Form>
+            <Form onSubmit={handleSubmit}>
               <Row>
                 <Col>
                   <Form.Label htmlFor="eventname">Event Name</Form.Label>
 
                   <Form.Control
+                      required
                       type="text"
                       id="eventname"
                       name="eventname"
                       value={newevent.eventname}
                       onChange={handleChange}
-                      required
+
                   />
                 </Col>
                 <Col>
@@ -1150,6 +1154,7 @@ export default function CreateEvent() {
                     <DatePicker
                         value={selectedRegistrationDate}
                         onChange={handleChangeRegistrationDate}
+                        minDate={new Date()}
                     />
                   </Col>
                 </Col>
@@ -1159,6 +1164,7 @@ export default function CreateEvent() {
                     <DatePicker
                         value={selectedEventDate}
                         onChange={handleChangeEventDate}
+                        minDate={selectedRegistrationDate}
                     />
                   </Col>
                 </Col>
@@ -1177,13 +1183,14 @@ export default function CreateEvent() {
                   />
                 </Col>
               </Row>
+              <div style={{textAlign: 'center', margin: '10px', padding: '5px'}}>
+                <Button type="submit" variant="outline-success">
+                  Create event
+                </Button>
+              </div>
             </Form>
 
-            <div style={{textAlign: 'center', margin: '10px', padding: '5px'}}>
-              <Button onClick={handleSubmit} variant="outline-success">
-                Create event
-              </Button>
-            </div>
+
           </div>
       }
     </div>

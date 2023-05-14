@@ -203,8 +203,6 @@ router.get('/createdEvents/:userID', async (req, res) => {
       d.image = 'image'
       return d
     })
-    // console.log(response)
-    // console.log(response.length)
     let result = []
     for (let index = 0; index < response.length; index++) {
       for (let index1 = 0; index1 < hobbies.length; index1++) {

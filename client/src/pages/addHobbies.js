@@ -7,6 +7,7 @@ import Navbar from '../components/navbar'
 import { BACKEND_URL } from '../config'
 import {Button, Col, Container, Row} from 'react-bootstrap'
 import Spinner from 'react-bootstrap/Spinner';
+import Loader from "../components/Loader";
 
 const backend = BACKEND_URL + '/api'
 
@@ -57,7 +58,7 @@ export default function AddHobbies() {
         hobbyID,
         userID,
       })
-      alert('Hobby added')
+      // alert('Hobby added')
       // setSelectedHobbies(response.data.hobbies)
       console.log(response.data.hobbies)
       setIsLoading(false)
@@ -72,7 +73,7 @@ export default function AddHobbies() {
     try {
       const url = backend + '/hobbies/' + hobbyID + '/user/' + userID
       const response = await axios.put(url)
-      alert('Hobby removed')
+      // alert('Hobby removed')
       // setSelectedHobbies(response.data.hobbies)
       console.log(response.data.hobbies)
       setIsLoading(false)
@@ -102,9 +103,7 @@ export default function AddHobbies() {
       </div>
       {
           isLoading &&
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          <Loader/>
       }
       {
         !isLoading &&

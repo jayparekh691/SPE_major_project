@@ -6,6 +6,7 @@ import Navbar from '../components/navbar'
 import { BACKEND_URL } from '../config'
 import {Button, Card, Container, Row} from 'react-bootstrap'
 import Spinner from "react-bootstrap/Spinner";
+import Loader from "../components/Loader";
 
 const backend = BACKEND_URL + '/api'
 
@@ -25,7 +26,7 @@ export default function YourEvents() {
         const response = await axios.get(
           backend + '/events/createdEvents/' + userID
         )
-        console.log(response)
+        // console.log(response)
         setEvents(response.data)
       } catch (err) {
         console.log(err)
@@ -33,7 +34,7 @@ export default function YourEvents() {
     }
 
     fetchEvents()
-  }, [])
+  }, [isLoading])
 
   const deleteEvent = (id) => {
     console.log(id)
@@ -41,7 +42,7 @@ export default function YourEvents() {
     try {
       const response = axios.delete(backend + '/events/' + id)
       setIsLoading(false)
-      // window.location.reload()
+      window.location.reload()
     } catch (err) {
       console.log(err)
     }
@@ -55,9 +56,7 @@ export default function YourEvents() {
 
       {
           isLoading &&
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          <Loader/>
       }
 
       {

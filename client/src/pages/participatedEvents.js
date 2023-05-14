@@ -5,6 +5,7 @@ import { BACKEND_URL } from '../config'
 import {Button, Card, Container, Row} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner';
+import Loader from "../components/Loader";
 
 
 const backend = BACKEND_URL + '/api'
@@ -36,11 +37,15 @@ export default function ParticipatedEvents() {
 
   const remove = async (eventID) => {
     setIsLoading(true)
+    if(isLoading==true)
+      console.log("participated loader true")
+    else
+      console.log("participated loader false")
     try {
       const response = await axios.put(
         backend + '/events/participatedEvents/remove/' + userID + '/' + eventID
       )
-      alert('Removed')
+      // alert('Removed')
       setParticipatedEvents(response.data.participatedEvents)
       setIsLoading(false)
     } catch (err) {
@@ -56,9 +61,7 @@ export default function ParticipatedEvents() {
 
       {
           isLoading &&
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          <Loader/>
       }
 
 

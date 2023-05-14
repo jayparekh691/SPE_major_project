@@ -5,6 +5,7 @@ import { UserModel } from '../models/Users.js'
 
 const router = express.Router()
 
+ // REGISTER A USER
 router.post('/register', async (req, res) => {
   const {
     name,
@@ -43,6 +44,8 @@ router.post('/register', async (req, res) => {
   res.json({ message: 'User Registered Successfully' })
   return res
 })
+
+// USER LOGIN
 
 router.post('/login', async (req, res) => {
   // console.log('In login server')

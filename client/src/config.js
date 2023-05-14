@@ -12,10 +12,10 @@
 // const BACKEND_URL = process.env.REACT_APP_STAGE === 'local'? 'http://localhost:3001': process.env.REACT_APP_BACKEND_URL
 // const FRONTEND_URL = process.env.REACT_APP_STAGE === 'local'? 'http://localhost:3000': process.env.REACT_APP_FRONTEND_URL
 
-const BACKEND_URL = `${process.env.REACT_APP_BACKEND_URL}`
-const FRONTEND_URL = `${process.env.REACT_APP_FRONTEND_URL}`
+// const BACKEND_URL = `${process.env.REACT_APP_BACKEND_URL}`
+// const FRONTEND_URL = `${process.env.REACT_APP_FRONTEND_URL}`
 
-// const BACKEND_URL = 'http://localhost:3001'
-// const FRONTEND_URL = 'http://localhost:3000'
+const BACKEND_URL = 'http://localhost:3001'
+const FRONTEND_URL = 'http://localhost:3000'
 
 export { BACKEND_URL, FRONTEND_URL }
