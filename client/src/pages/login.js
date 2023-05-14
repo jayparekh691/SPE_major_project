@@ -15,8 +15,8 @@ export default function Login() {
   // console.log(backend)
   // window.history.forward()
   // window.onunload = async function () {
-    return
-  }
+  //   return
+  // }
   const [_, setCookies] = useCookies(['access_token'])
 
   const [username, setUsername] = useState('')
