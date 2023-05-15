@@ -7,8 +7,8 @@
       copy:
         src: ./kubernetes-config
         dest: ./
-        owner: jayant
-        group: jayant
+        owner: jay
+        group: jay
         mode: 0644
     - name: Delete minikube
       command: minikube delete
