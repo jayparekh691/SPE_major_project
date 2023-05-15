@@ -16,6 +16,10 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const userID = useGetUserID()
   const navigate = useNavigate()
+  window.history.forward()
+  window.onunload = async function () {
+    return
+  }
   if (userID === null) navigate('/')
   useEffect(() => {
     setTimeout(()=>{
