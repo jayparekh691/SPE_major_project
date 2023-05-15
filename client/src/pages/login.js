@@ -12,10 +12,6 @@ const backend = BACKEND_URL + '/api'
 export const validateInput = (str = '') => str.includes('@')
 
 export default function Login() {
-  window.history.forward()
-  window.onunload = async function () {
-    return
-  }
   const [_, setCookies] = useCookies(['access_token'])
 
   const [username, setUsername] = useState('')
