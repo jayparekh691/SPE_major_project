@@ -29,11 +29,11 @@ spec:
           volumeMounts:
             - name: karaf-conf-storage
               mountPath: '/usr/src/app/src/logs'
-        # Use hostPath here
-      volumes:
-        - name: karaf-conf-storage
-          hostPath:
-            path: '/tmp/data'
+      #   # Use hostPath here
+      # volumes:
+      #   - name: karaf-conf-storage
+      #     hostPath:
+      #       path: '/tmp/data'
 ---
 apiVersion: v1
 kind: Service
