@@ -3,6 +3,7 @@ pipeline {
     environment {
         DOCKERHUB_REGISTRY = "jayparekhiiitb/spe_major_project"
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-id')
+        ANSIBLE_CREDENTIALS = credentials('ANSIBLE_VAULT_PASSWORD')
     }
     agent any 
     stages {
@@ -17,8 +18,14 @@ pipeline {
 				steps {
 					sh '''
 							cd server
+							echo $ANSIBLE_CREDENTIALS > secret.txt
+							ansible-vault decrypt env-local.yaml --vault-password-file secret.txt
 							npm ci
 							npm run test
+							ansible-vault encrypt env-local.yaml --vault-password-file secret.txt
+							if [ -f secret.txt ] ; then
+							    rm secret.txt
+							fi
 					'''
 				}
 			}
