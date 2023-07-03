@@ -13,7 +13,7 @@ COPY package*.json ./
 # Install the dependencies mentioned in package.json
 RUN npm install
 
-# Copy the local files to the "app" folder
+# it is trying to copy the contents of the current build context (host machine) to the specified destination inside the Docker image.
 COPY . .
 
 # Expose port 3000 on the host machine to the container for listening to external connections
