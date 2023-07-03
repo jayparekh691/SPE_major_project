@@ -10,7 +10,6 @@ pipeline {
         
         stage('Git Pull') {
             steps {
-                // credentials are required because its a private repository
                 git url: 'https://github.com/jayparekh691/SPE_major_project.git'
             }
         }
